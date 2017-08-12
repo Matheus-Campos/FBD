@@ -85,7 +85,7 @@ INSERT INTO S
 -- Aplicando as restrições de integridade
 -- Chaves primárias
 alter table VEICULO add constraint pk_VEICULO primary key (CHASSI);
-alter table ORDEM_SERVICO add constraint pk_ORDEM_SERVICO primary key (NUMERO_OS);
+alter table ORDEM_SERVICO add constraint pk_ORDEM_SERVICO primary key (NUMERO_OS,CHASSI);
 alter table ITEM add constraint pk_ITEM primary key (COD_ITEM);
 alter table PECA add constraint pk_PECA primary key (COD_PECA);
 alter table SERVICO add constraint pk_SERVICO primary key (COD_SERVICO);
