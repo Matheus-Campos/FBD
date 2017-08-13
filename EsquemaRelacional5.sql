@@ -1,6 +1,9 @@
 -- Script para criação do BD do Esquema Relacional 5
 -- Grupo: Filipe Carlos e Matheus Campos
+
+-- se já existe um esquema empresa, delete
 DROP SCHEMA EMPRESA;
+
 -- criando esquema
 CREATE SCHEMA EMPRESA;
 USE EMPRESA;
@@ -138,19 +141,19 @@ INSERT INTO PERTENCE (ID_EQUIPE, COD_PESSOA) VALUES
 (2, 4),
 (3, 1);
 
--- Aplicando as restrições de integridade
--- Chaves primárias
+-- aplicando as restrições de integridade
+-- chaves primárias
 alter table VEICULO add constraint pk_VEICULO primary key (CHASSI);
-alter table ORDEM_SERVICO add constraint pk_ORDEM_SERVICO primary key (NUMERO_OS,CHASSI);
+alter table ORDEM_SERVICO add constraint pk_ORDEM_SERVICO primary key CLUSTERED(NUMERO_OS, CHASSI);
 alter table ITEM add constraint pk_ITEM primary key (COD_ITEM);
 alter table PECA add constraint pk_PECA primary key (COD_PECA);
 alter table SERVICO add constraint pk_SERVICO primary key (COD_SERVICO);
 alter table EQUIPE add constraint pk_EQUIPE primary key (ID_EQUIPE);
-alter table PERTENCE add constraint pk_PERTENCE primary key (ID_PERTENCE, COD_PERTENCE);
+alter table PERTENCE add constraint pk_PERTENCE primary key CLUSTERED(ID_PERTENCE, COD_PERTENCE);
 alter table PESSOA add constraint pk_PESSOA primary key (COD_PESSOA);
-alter table DEMANDA add constraint pk_DEMANDA primary key (COD_ITEM_PECA,COD_ITEM_SERVICO);
+alter table DEMANDA add constraint pk_DEMANDA primary key CLUSTERED(COD_ITEM_PECA, COD_ITEM_SERVICO);
 
--- Chaves estrangeiras
+-- chaves estrangeiras
 alter table VEICULO add constraint fk_VEICULO_PESSOA foreign key (COD_PESSOA) references PESSOA(COD_PESSOA);
 alter table ORDEM_SERVICO add constraint fk_ORDEM_SERVICO_VEICULO foreign key (CHASSI) references VEICULO(CHASSI);
 alter table ORDEM_SERVICO add constraint fk_ORDEM_SERVICO_EQUIPE foreign key (ID_EQUIPE) references EQUIPE(ID_EQUIPE);
@@ -158,6 +161,6 @@ alter table ITEM add constraint fk_ITEM_ORDEM_SERVICO foreign key (NUM_OS) refer
 alter table ITEM add constraint fk_ITEM_VEICULO foreign key (CHASSI) references VEICULO(CHASSI);
 alter table PECA add constraint fk_PECA_ITEM foreign key (COD_PECA) references ITEM(COD_ITEM);
 alter table SERVICO add constraint fk_SERVICO_ITEM foreign key (COD_SERVICO) references ITEM(COD_ITEM);
-alter table DEMANDA add constraint fk_DEMANDA_ITEM foreign key (COD_ITEM_PECA,COD_ITEM_SERVICO) references ITEM(COD_ITEM);
+alter table DEMANDA add constraint fk_DEMANDA_ITEM foreign key (COD_ITEM_PECA, COD_ITEM_SERVICO) references ITEM(COD_ITEM);
 alter table PERTENCE add constraint fk_PERTENCE_EQUIPE foreign key (ID_EQUIPE) references EQUIPE(ID_EQUIPE);
 alter table PERTENCE add constraint fk_PERTENCE_PESSOA foreign key (COD_PESSOA) references EQUIPE(COD_PESSOA);
