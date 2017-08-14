@@ -25,18 +25,20 @@ CREATE TABLE VEICULO (
 );
 
 CREATE TABLE ORDEM_SERVICO (
-	NUMERO_OS INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	NUMERO_OS INTEGER NOT NULL AUTO_INCREMENT,
 	DATA_EMISSAO DATE NOT NULL,
 	DATA_CONCLUSAO DATE,
 	CHASSI VARCHAR(20) NOT NULL,
-	ID_EQUIPE INTEGER NOT NULL
+	ID_EQUIPE INTEGER NOT NULL,
+    PRIMARY KEY(NUMERO_OS,CHASSI)
 );
 
 CREATE TABLE ITEM (
 	COD_ITEM INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	DESCRICAO VARCHAR(100),
 	NUM_OS INTEGER NOT NULL,
-	CHASSI VARCHAR(20) NOT NULL
+	CHASSI VARCHAR(20) NOT NULL,
+    FOREIGN KEY(NUM_OS) references ORDEM_SERVICO(NUMERO_OS)
 );
 
 CREATE TABLE PECA (
@@ -63,7 +65,8 @@ CREATE TABLE EQUIPE(
 
 CREATE TABLE PERTENCE (
 	ID_EQUIPE INTEGER NOT NULL,
-	COD_PESSOA INTEGER NOT NULL
+	COD_PESSOA INTEGER NOT NULL,
+    FOREIGN KEY(COD_PESSOA) references PESSOA(COD_PESSOA)
 );
 
 -- povoando banco de dados
@@ -87,8 +90,8 @@ INSERT INTO ORDEM_SERVICO (NUMERO_OS, DATA_EMISSAO, DATA_CONCLUSAO, CHASSI, ID_E
 (NULL, STR_TO_DATE('16,8,2017','%d,%m,%Y'), STR_TO_DATE('17,8,2017','%d,%m,%Y'), '9BWHE21JX24060960', 1),
 (NULL, STR_TO_DATE('15,8,2017','%d,%m,%Y'), STR_TO_DATE('17,8,2017','%d,%m,%Y'), '9BDHE25BX24060964', 2),
 (NULL, STR_TO_DATE('14,8,2017','%d,%m,%Y'), STR_TO_DATE('14,8,2017','%d,%m,%Y'), '9BFHE26GX24060965', 3),
-/*(NULL, STR_TO_DATE('12,8,2017','%d,%m,%Y'), NULL, '9BAHE24MX24060963', 1),
-(NULL, STR_TO_DATE('11,8,2017','%d,%m,%Y'), STR_TO_DATE('15,8,2017','%d,%m,%Y'), '9BCHE23LX24060962', 1),*/
+(NULL, STR_TO_DATE('12,8,2017','%d,%m,%Y'), NULL, '9BAHE24MX24060963', 1),
+(NULL, STR_TO_DATE('11,8,2017','%d,%m,%Y'), STR_TO_DATE('15,8,2017','%d,%m,%Y'), '9BCHE23LX24060962', 1),
 (NULL, STR_TO_DATE('13,8,2017','%d,%m,%Y'), STR_TO_DATE('14,8,2017','%d,%m,%Y'), '9BKHE220X24060961', 2);
 
 INSERT INTO ITEM (COD_ITEM, DESCRICAO, NUM_OS, CHASSI) VALUES
@@ -144,23 +147,18 @@ INSERT INTO PERTENCE (ID_EQUIPE, COD_PESSOA) VALUES
 -- aplicando as restrições de integridade
 -- chaves primárias
 alter table VEICULO add constraint pk_VEICULO primary key (CHASSI);
-alter table ORDEM_SERVICO add constraint pk_ORDEM_SERVICO primary key CLUSTERED(NUMERO_OS, CHASSI);
-alter table ITEM add constraint pk_ITEM primary key (COD_ITEM);
 alter table PECA add constraint pk_PECA primary key (COD_PECA);
 alter table SERVICO add constraint pk_SERVICO primary key (COD_SERVICO);
-alter table EQUIPE add constraint pk_EQUIPE primary key (ID_EQUIPE);
-alter table PERTENCE add constraint pk_PERTENCE primary key CLUSTERED(ID_PERTENCE, COD_PERTENCE);
-alter table PESSOA add constraint pk_PESSOA primary key (COD_PESSOA);
+alter table PERTENCE add constraint pk_PERTENCE primary key CLUSTERED(ID_EQUIPE, COD_PESSOA);
 alter table DEMANDA add constraint pk_DEMANDA primary key CLUSTERED(COD_ITEM_PECA, COD_ITEM_SERVICO);
 
 -- chaves estrangeiras
 alter table VEICULO add constraint fk_VEICULO_PESSOA foreign key (COD_PESSOA) references PESSOA(COD_PESSOA);
 alter table ORDEM_SERVICO add constraint fk_ORDEM_SERVICO_VEICULO foreign key (CHASSI) references VEICULO(CHASSI);
 alter table ORDEM_SERVICO add constraint fk_ORDEM_SERVICO_EQUIPE foreign key (ID_EQUIPE) references EQUIPE(ID_EQUIPE);
-alter table ITEM add constraint fk_ITEM_ORDEM_SERVICO foreign key (NUM_OS) references ORDEM_SERVICO(NUMERO_OS);
 alter table ITEM add constraint fk_ITEM_VEICULO foreign key (CHASSI) references VEICULO(CHASSI);
 alter table PECA add constraint fk_PECA_ITEM foreign key (COD_PECA) references ITEM(COD_ITEM);
 alter table SERVICO add constraint fk_SERVICO_ITEM foreign key (COD_SERVICO) references ITEM(COD_ITEM);
-alter table DEMANDA add constraint fk_DEMANDA_ITEM foreign key (COD_ITEM_PECA, COD_ITEM_SERVICO) references ITEM(COD_ITEM);
+alter table DEMANDA add constraint fk_DEMANDA_ITEM_1 foreign key (COD_ITEM_PECA) references ITEM(COD_ITEM);
+alter table DEMANDA add constraint fk_DEMANDA_ITEM_2 foreign key (COD_ITEM_SERVICO) references ITEM(COD_ITEM);
 alter table PERTENCE add constraint fk_PERTENCE_EQUIPE foreign key (ID_EQUIPE) references EQUIPE(ID_EQUIPE);
-alter table PERTENCE add constraint fk_PERTENCE_PESSOA foreign key (COD_PESSOA) references EQUIPE(COD_PESSOA);
