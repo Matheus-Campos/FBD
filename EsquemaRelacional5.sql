@@ -2,8 +2,6 @@
 -- Grupo: Filipe Carlos e Matheus Campos
 
 -- se já existe um esquema empresa, delete
-DROP SCHEMA EMPRESA;
-
 -- criando esquema
 CREATE SCHEMA EMPRESA;
 USE EMPRESA;
