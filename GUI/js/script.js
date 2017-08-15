@@ -1,8 +1,9 @@
 function main() {
   $('#pessoa-telefone').hide();
   $('#pessoa-especialidade').hide();
-  getElementsByName('pessoa-tipo').on('click', function () {
-    $('#pessoa-especialidade').show();
+  $('.botao').next().hide();
+  $('.botao').on('click', function () {
+    $(this).next().slideToggle();
   })
 }
 
