@@ -2,6 +2,8 @@
 -- Grupo: Filipe Carlos e Matheus Campos
 
 -- se já existe um esquema empresa, delete
+DROP SCHEMA EMPRESA;
+
 -- criando esquema
 CREATE SCHEMA EMPRESA;
 USE EMPRESA;
@@ -19,34 +21,34 @@ CREATE TABLE PESSOA (
 CREATE TABLE VEICULO (
 	CHASSI VARCHAR(17) NOT NULL,
 	MARCA VARCHAR(20) NOT NULL,
-	COD_PESSOA INTEGER NOT NULL
+	COD_PESSOA INTEGER
 );
 
 CREATE TABLE ORDEM_SERVICO (
 	NUMERO_OS INTEGER NOT NULL AUTO_INCREMENT,
 	DATA_EMISSAO DATE NOT NULL,
 	DATA_CONCLUSAO DATE,
-	CHASSI VARCHAR(20) NOT NULL,
-	ID_EQUIPE INTEGER NOT NULL,
+	CHASSI VARCHAR(20),
+	ID_EQUIPE INTEGER,
     PRIMARY KEY(NUMERO_OS,CHASSI)
 );
 
 CREATE TABLE ITEM (
 	COD_ITEM INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	DESCRICAO VARCHAR(100),
-	NUM_OS INTEGER NOT NULL,
-	CHASSI VARCHAR(20) NOT NULL,
+	NUM_OS INTEGER,
+	CHASSI VARCHAR(20),
     FOREIGN KEY(NUM_OS) references ORDEM_SERVICO(NUMERO_OS)
 );
 
 CREATE TABLE PECA (
 	COD_PECA INTEGER NOT NULL,
-	FORNECEDOR VARCHAR(20) NOT NULL
+	FORNECEDOR VARCHAR(20)
 );
 
 CREATE TABLE SERVICO(
 	COD_SERVICO INTEGER NOT NULL,
-	GARANTIA TINYINT NOT NULL
+	GARANTIA TINYINT
 );
 
 CREATE TABLE DEMANDA (
@@ -63,8 +65,7 @@ CREATE TABLE EQUIPE(
 
 CREATE TABLE PERTENCE (
 	ID_EQUIPE INTEGER NOT NULL,
-	COD_PESSOA INTEGER NOT NULL,
-    FOREIGN KEY(COD_PESSOA) references PESSOA(COD_PESSOA)
+	COD_PESSOA INTEGER NOT NULL
 );
 
 -- povoando banco de dados
@@ -151,12 +152,13 @@ alter table PERTENCE add constraint pk_PERTENCE primary key CLUSTERED(ID_EQUIPE,
 alter table DEMANDA add constraint pk_DEMANDA primary key CLUSTERED(COD_ITEM_PECA, COD_ITEM_SERVICO);
 
 -- chaves estrangeiras
-alter table VEICULO add constraint fk_VEICULO_PESSOA foreign key (COD_PESSOA) references PESSOA(COD_PESSOA);
-alter table ORDEM_SERVICO add constraint fk_ORDEM_SERVICO_VEICULO foreign key (CHASSI) references VEICULO(CHASSI);
-alter table ORDEM_SERVICO add constraint fk_ORDEM_SERVICO_EQUIPE foreign key (ID_EQUIPE) references EQUIPE(ID_EQUIPE);
-alter table ITEM add constraint fk_ITEM_VEICULO foreign key (CHASSI) references VEICULO(CHASSI);
-alter table PECA add constraint fk_PECA_ITEM foreign key (COD_PECA) references ITEM(COD_ITEM);
-alter table SERVICO add constraint fk_SERVICO_ITEM foreign key (COD_SERVICO) references ITEM(COD_ITEM);
-alter table DEMANDA add constraint fk_DEMANDA_ITEM_1 foreign key (COD_ITEM_PECA) references ITEM(COD_ITEM);
-alter table DEMANDA add constraint fk_DEMANDA_ITEM_2 foreign key (COD_ITEM_SERVICO) references ITEM(COD_ITEM);
-alter table PERTENCE add constraint fk_PERTENCE_EQUIPE foreign key (ID_EQUIPE) references EQUIPE(ID_EQUIPE);
+alter table VEICULO add constraint fk_VEICULO_PESSOA foreign key (COD_PESSOA) references PESSOA(COD_PESSOA) on update cascade on delete set NULL;
+alter table ORDEM_SERVICO add constraint fk_ORDEM_SERVICO_VEICULO foreign key (CHASSI) references VEICULO(CHASSI) on update no action on delete cascade;
+alter table ORDEM_SERVICO add constraint fk_ORDEM_SERVICO_EQUIPE foreign key (ID_EQUIPE) references EQUIPE(ID_EQUIPE) on update cascade on delete set NULL;
+alter table ITEM add constraint fk_ITEM_VEICULO foreign key (CHASSI) references VEICULO(CHASSI) on update no action on delete cascade;
+alter table PECA add constraint fk_PECA_ITEM foreign key (COD_PECA) references ITEM(COD_ITEM) on update cascade on delete cascade;
+alter table SERVICO add constraint fk_SERVICO_ITEM foreign key (COD_SERVICO) references ITEM(COD_ITEM) on update cascade on delete cascade;
+alter table DEMANDA add constraint fk_DEMANDA_ITEM_PECA foreign key (COD_ITEM_PECA) references ITEM(COD_ITEM) on update cascade on delete cascade;
+alter table DEMANDA add constraint fk_DEMANDA_ITEM_SERVICO foreign key (COD_ITEM_SERVICO) references ITEM(COD_ITEM) on update cascade on delete cascade;
+alter table PERTENCE add constraint fk_PERTENCE_EQUIPE foreign key (ID_EQUIPE) references EQUIPE(ID_EQUIPE) on update cascade on delete cascade;
+alter table PERTENCE add constraint fk_PERTENCE_PESSOA foreign key (COD_PESSOA) references PESSOA(COD_PESSOA) on update cascade on delete cascade;
