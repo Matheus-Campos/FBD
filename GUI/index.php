@@ -22,7 +22,7 @@ require_once 'conexao.php';
               <form action="addpessoa.php" method="post">
                 <input type="text" class="form-control espacado" name="pessoa-nome" placeholder="Ex: Filipe" required>
                 <input type="text" class="form-control espacado" name="pessoa-endereco" placeholder="Ex: Rua Mamanguape, 69" required>
-                <select class="form-control espacado" name="">
+                <select class="form-control espacado" name="pessoa-tipo">
                   <option selected>Mecânico</option>
                   <option>Cliente</option>
                 </select>

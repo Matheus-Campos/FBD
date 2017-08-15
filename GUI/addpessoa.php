@@ -1,5 +1,11 @@
 <?php
 require_once "conexao.php";
+$nome=$_POST['pessoa-nome'];
+$endereco=$_POST['pessoa-nome'];
+$tipo=$_POST['pessoa-tipo'];
+$telefone=$_POST['pessoa-telefone'];
+$especialidade=$_POST['pessoa-especialidade'];
+$sql = mysqli_query($con,"INSERT INTO PESSOA(COD_PESSOA, NOME, ENDERECO, TIPO, ESPECIALIDADE, TELEFONE) VALUES (null,$nome,$endereco,$tipo,$telefone,$especialidade)");
 ?>
 <html>
   <head>
