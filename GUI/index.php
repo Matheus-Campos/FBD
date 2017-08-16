@@ -64,8 +64,14 @@ require_once 'conexao.php';
                   <input type="text" class="form-control" name="veiculo-marca" placeholder="Ex: VOLKSWAGEN" required>
                 </div>
                 <div class="form-group">
-                  <label for="veiculo-pessoa">Pessoa (ID):</label>
-                  <input type="text" class="form-control" name="veiculo-pessoa" placeholder="Ex: 1">
+                  <label for="veiculo-pessoa">Pessoa:</label>
+                  <select class="form-control" name="veiculo-pessoa">
+                  <?php
+                  $result = mysqli_query($con, "SELECT COD_PESSOA FROM PESSOA ORDER BY COD_PESSOA ASC;");
+                  while ($pessoa = mysqli_fetch_assoc($result)) { ?>
+                    <option><?php echo $pessoa['COD_PESSOA']; ?></option>
+                  <?php } ?>
+                  </select>
                 </div>
                 <input type="submit" class="btn btn-primary btn-block" value="Submeter">
               </form>
@@ -88,14 +94,20 @@ require_once 'conexao.php';
                   <select class="form-control" name="item-veiculo">
                     <?php
                     $result = mysqli_query($con, "SELECT CHASSI FROM VEICULO;");
-                    while($chassi = mysqli_fetch_assoc($result)) {?>
+                    while($chassi = mysqli_fetch_assoc($result)) { ?>
                     <option><?php echo $chassi['CHASSI']; ?></option>
                   <?php } ?>
                   </select>
                 </div>
                 <div class="form-group">
-                  <label for="item-numos">Ordem de serviço (Número):</label>
-                  <input type="number" class="form-control" name="item-numos" placeholder="Ex: 2">
+                  <label for="item-numos">Ordem de serviço:</label>
+                  <select class="form-control" name="item-numos">
+                    <?php
+                    $result = mysqli_query($con, "SELECT NUMERO_OS FROM ORDEM_SERVICO ORDER BY NUMERO_OS ASC;");
+                    while ($num_os = mysqli_fetch_assoc($result)) { ?>
+                        <option value=""><?php echo $num_os['NUMERO_OS']; ?></option>
+                  <?php } ?>
+                  </select>
                 </div>
                 <div class="form-group">
                   <label for="item-tipo">Tipo:</label>
@@ -103,6 +115,14 @@ require_once 'conexao.php';
                     <option selected>Peça</option>
                     <option>Serviço</option>
                   </select>
+                </div>
+                <div class="form-group" id="item-fornecedor">
+                  <label for="item-fornecedor">Fornecedor:</label>
+                  <input type="text" name="item-fornecedor" placeholder="Ex: Michellin" class="form-control">
+                </div>
+                <div class="form-group" id="item-garantia">
+                  <label for="item-garantia">Fornecedor:</label>
+                  <input type="number" name="item-garantia" placeholder="Ex: 2" class="form-control">
                 </div>
                 <input type="submit" class="btn btn-success btn-block" value="Submeter">
               </form>
@@ -133,6 +153,8 @@ if (isset($_GET['add'])) {
     $descricao=$_POST['item-descricao'];
     $chassi_item=$_POST['item-veiculo'];
     $num_os=$_POST['item-numos'];
+    $garantia=$_POST['item-garantia'];
+    $fornecedor=$_POST['item-fornecedor'];
     $sql = mysqli_query($con,"INSERT INTO ITEM(COD_ITEM,DESCRICAO,NUM_OS,CHASSI) VALUES ('NULL','".$descricao."','".$chassi_item."','".$num_os."')");
   }
 }
