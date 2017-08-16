@@ -87,10 +87,9 @@ require_once 'conexao.php';
                   <label for="item-veiculo">Veículo:</label>
                   <select class="form-control" name="item-veiculo">
                     <?php
-                    $result = mysqli_query($con, "SELECT 'CHASSI' FROM 'VEICULO';");
-                    $chassis = mysqli_fetch_array($result);
-                    foreach ($chassis as $chassi) {?>
-                    <option><?php echo $chassi; ?></option>
+                    $result = mysqli_query($con, "SELECT CHASSI FROM VEICULO;");
+                    while($chassi = mysqli_fetch_assoc($result)) {?>
+                    <option><?php echo $chassi['CHASSI']; ?></option>
                   <?php } ?>
                   </select>
                 </div>
