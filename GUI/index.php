@@ -167,25 +167,3 @@ if (isset($_GET['add'])) {
   }
 }
 ?>
-<?php
-if (isset($_GET['update'])) {
-  if ($_GET['update']=='pessoa') {
-    $nome=$_POST['pessoa-nome'];
-    $endereco=$_POST['pessoa-endereco'];
-    $tipo=$_POST['pessoa-tipo'];
-    $telefone=$_POST['pessoa-telefone'];
-    $especialidade=$_POST['pessoa-especialidade'];
-    $sql = mysqli_query($con,"INSERT INTO PESSOA(COD_PESSOA, NOME, ENDERECO, TIPO, ESPECIALIDADE, TELEFONE) VALUES ('NULL','".$nome."','".$endereco."','".$tipo."','".$telefone."','".$especialidade."')");
-  } else if ($_GET['add']=='veiculo') {
-    $chassi=$_POST['veiculo-chassi'];
-    $marca=$_POST['veiculo-marca'];
-    $pessoa=$_POST['veiculo-pessoa'];
-    $sql = mysqli_query($con,"INSERT INTO VEICULO(CHASSI,MARCA,COD_PESSOA) VALUES ('".$chassi."','".$marca."','".$pessoa."')");
-  } else if ($_GET['add']=='item') {
-    $descricao=$_POST['item-descricao'];
-    $chassi_item=$_POST['item-veiculo'];
-    $num_os=$_POST['item-numos'];
-    $sql = mysqli_query($con,"INSERT INTO ITEM(COD_ITEM,DESCRICAO,NUM_OS,CHASSI) VALUES ('NULL','".$descricao."','".$chassi_item."','".$num_os."')");
-  }
-}
-?>
