@@ -1,6 +1,8 @@
 function main() {
-  $('#pessoa-telefone').hide();
+  //$('#pessoa-telefone').hide();
   $('#pessoa-especialidade').hide();
+  //$('#item-garantia').hide();
+  $('#item-fornecedor').hide();
   $('.botao').next().hide();
   $('.botao').on('click', function () {
     $(this).next().slideToggle();
