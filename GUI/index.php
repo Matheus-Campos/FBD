@@ -30,7 +30,7 @@ require_once 'conexao.php';
                 </div>
                 <div class="form-group">
                   <label for="pessoa-tipo">Tipo:</label>
-                  <select class="form-control" name="pessoa-tipo">
+                  <select class="form-control" name="pessoa-tipo" id="pessoa-tipo">
                     <option selected>Mecânico</option>
                     <option>Cliente</option>
                   </select>
@@ -84,8 +84,15 @@ require_once 'conexao.php';
                   <input type="text" class="form-control" name="item-descricao" placeholder="Ex: Alinhamento de carro" required>
                 </div>
                 <div class="form-group">
-                  <label for="item-veiculo">Veículo (Chassi):</label>
-                  <input type="text" class="form-control" name="item-veiculo" placeholder="Ex: 9BKHE220X24060961" required>
+                  <label for="item-veiculo">Veículo:</label>
+                  <select class="form-control" name="item-veiculo">
+                    <?php
+                    $result = mysqli_query($con, "SELECT 'CHASSI' FROM 'VEICULO';");
+                    $chassis = mysqli_fetch_array($result);
+                    foreach ($chassis as $chassi) {?>
+                    <option><?php echo $chassi; ?></option>
+                  <?php } ?>
+                  </select>
                 </div>
                 <div class="form-group">
                   <label for="item-numos">Ordem de serviço (Número):</label>
