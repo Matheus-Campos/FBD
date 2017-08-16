@@ -13,56 +13,92 @@ require_once 'conexao.php';
     <div class="container-fluid">
       <h1 class="text-primary text-center">Oficina Esquema5</h1>
       <div class="row">
-        <div class="col-xs-4">
+        <div class="col-md-4">
           <div class="pessoa">
-            <div class="botao btn btn-info btn-md">
+            <div class="botao btn btn-primary btn-block">
               Adicionar pessoa
             </div>
             <div>
               <form action="addpessoa.php" method="post">
-                <input type="text" class="form-control espacado" name="pessoa-nome" placeholder="Ex: Filipe" required>
-                <input type="text" class="form-control espacado" name="pessoa-endereco" placeholder="Ex: Rua Mamanguape, 69" required>
-                <select class="form-control espacado" name="pessoa-tipo">
-                  <option selected>Mecânico</option>
-                  <option>Cliente</option>
-                </select>
-                <input type="number" class="form-control espacado" id="pessoa-telefone" name="pessoa-telefone" placeholder="40028922">
-                <input type="text" class="form-control espacado" id="pessoa-especialidade" name="pessoa-especialidade" placeholder="Motor">
-                <input type="submit" class="btn btn-primary espacado" value="Submeter">
+                <div class="form-group">
+                  <label for="pessoa-nome">Nome:</label>
+                  <input type="text" class="form-control" name="pessoa-nome" placeholder="Ex: Filipe" required>
+                </div>
+                <div class="form-group">
+                  <label for="pessoa-endereco">Endereço:</label>
+                  <input type="text" class="form-control" name="pessoa-endereco" placeholder="Ex: Rua Mamanguape, 69" required>
+                </div>
+                <div class="form-group">
+                  <label for="pessoa-tipo">Tipo:</label>
+                  <select class="form-control" name="pessoa-tipo">
+                    <option selected>Mecânico</option>
+                    <option>Cliente</option>
+                  </select>
+                </div>
+                <div class="form-group" id="pessoa-telefone">
+                  <label for="pessoa-telefone">Telefone:</label>
+                  <input type="number" class="form-control" name="pessoa-telefone" placeholder="40028922">
+                </div>
+                <div class="form-group" id="pessoa-especialidade">
+                  <label for="pessoa-especialidade">Especialidade:</label>
+                  <input type="text" class="form-control" name="pessoa-especialidade" placeholder="Motor">
+                </div>
+                <input type="submit" class="btn btn-default btn-block" value="Submeter">
               </form>
             </div>
           </div>
         </div>
-        <div class="col-xs-4">
+        <div class="col-md-4">
           <div class="veiculo">
-            <div class="botao btn btn-info btn-md">
+            <div class="botao btn btn-primary btn-block">
               Adicionar veículo
             </div>
             <div>
               <form action="addveiculo.php" method="post">
-                <input type="text" class="form-control espacado" name="veiculo-chassi" placeholder="Ex: 9BWHE21JX24060960" required>
-                <input type="text" class="form-control espacado" name="veiculo-marca" placeholder="Ex: VOLKSWAGEN" required>
-                <input type="text" class="form-control espacado" name="veiculo-pessoa" placeholder="Ex: 1">
-                <input type="submit" class="btn btn-primary espacado" value="Submeter">
+                <div class="form-group">
+                  <label for="veiculo-chassi">Chassi:</label>
+                  <input type="text" class="form-control" name="veiculo-chassi" placeholder="Ex: 9BWHE21JX24060960" required>
+                </div>
+                <div class="form-group">
+                  <label for="veiculo-marca">Marca:</label>
+                  <input type="text" class="form-control" name="veiculo-marca" placeholder="Ex: VOLKSWAGEN" required>
+                </div>
+                <div class="form-group">
+                  <label for="veiculo-pessoa">Pessoa (ID):</label>
+                  <input type="text" class="form-control" name="veiculo-pessoa" placeholder="Ex: 1">
+                </div>
+                <input type="submit" class="btn btn-primary btn-block" value="Submeter">
               </form>
             </div>
           </div>
         </div>
-        <div class="col-xs-4">
+        <div class="col-md-4">
           <div class="item">
-            <div class="botao btn btn-info btn-md">
+            <div class="botao btn btn-primary btn-block">
               Adicionar item
             </div>
             <div>
               <form action="additem.php" method="post">
-                <input type="textarea" class="form-control espacado" name="item-descricao" placeholder="Ex: Alinhamento de carro" required>
-                <input type="text" class="form-control espacado" name="item-veiculo" placeholder="Ex: 9BKHE220X24060961" required>
-                <input type="number" class="form-control espacado" name="item-numos" placeholder="Ex: 2">
-                <select class="form-control espacado" name="">
-                  <option selected>Peça</option>
-                  <option>Serviço</option>
-                </select>
-                <input type="submit" class="btn btn-primary espacado" value="Submeter">
+                <div class="form-group">
+                  <label for="item-descricao">Descrição:</label>
+                  <input type="text" class="form-control" name="item-descricao" placeholder="Ex: Alinhamento de carro" required>
+                </div>
+                <div class="form-group">
+                  <label for="item-veiculo">Veículo (Chassi):</label>
+                  <input type="text" class="form-control" name="item-veiculo" placeholder="Ex: 9BKHE220X24060961" required>
+                </div>
+                <div class="form-group">
+                  <label for="item-numos">Ordem de serviço (Número):</label>
+                  <input type="number" class="form-control" name="item-numos" placeholder="Ex: 2">
+                </div>
+                <div class="form-group">
+                  <label for="item-tipo">Tipo:</label>
+                  <select class="form-control " name="item-tipo">
+                    <option selected>Peça</option>
+                    <option>Serviço</option>
+                  </select>
+                </div>
+                <input type="submit" class="btn btn-success btn-block" value="Submeter">
               </form>
             </div>
           </div>

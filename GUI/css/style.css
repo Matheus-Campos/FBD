@@ -1,34 +1,24 @@
 body{
   font-family: monospace, Heveltica;
-  background-color: whitesmoke;
+  background-color: white;
 }
 
 .pessoa{
-  background-color: Bisque;
-  padding: 35px 0px 20px 10px;
-  width: 400px;
+  background-color: whitesmoke;
   border-radius: 10px;
 }
 
 .veiculo{
   background-color: LightSteelBlue;
-  padding: 35px 0px 20px 10px;
-  width: 400px;
   border-radius: 10px;
 }
 
 .item{
   background-color: SpringGreen;
-  padding: 35px 0px 20px 10px;
-  width: 400px;
   border-radius: 10px;
 }
 
 .botao{
   background-color: white;
   color: black;
-}
-
-.espacado{
-  margin-top: 10px;
 }
