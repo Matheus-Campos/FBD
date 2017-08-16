@@ -19,7 +19,7 @@ require_once 'conexao.php';
               Adicionar pessoa
             </div>
             <div>
-              <form action="addpessoa.php" method="post">
+              <form action="?add=pessoa" method="post">
                 <div class="form-group">
                   <label for="pessoa-nome">Nome:</label>
                   <input type="text" class="form-control" name="pessoa-nome" placeholder="Ex: Filipe" required>
@@ -54,7 +54,7 @@ require_once 'conexao.php';
               Adicionar veículo
             </div>
             <div>
-              <form action="addveiculo.php" method="post">
+              <form action="?add=veiculo" method="post">
                 <div class="form-group">
                   <label for="veiculo-chassi">Chassi:</label>
                   <input type="text" class="form-control" name="veiculo-chassi" placeholder="Ex: 9BWHE21JX24060960" required>
@@ -78,7 +78,7 @@ require_once 'conexao.php';
               Adicionar item
             </div>
             <div>
-              <form action="additem.php" method="post">
+              <form action="?add=item" method="post">
                 <div class="form-group">
                   <label for="item-descricao">Descrição:</label>
                   <input type="text" class="form-control" name="item-descricao" placeholder="Ex: Alinhamento de carro" required>
@@ -109,3 +109,25 @@ require_once 'conexao.php';
     <script type="text/javascript" src="js/script.js"></script>
   </body>
 </html>
+<?php
+if (isset($_GET['add'])) {
+  if ($_GET['add']=='pessoa') {
+    $nome=$_POST['pessoa-nome'];
+    $endereco=$_POST['pessoa-endereco'];
+    $tipo=$_POST['pessoa-tipo'];
+    $telefone=$_POST['pessoa-telefone'];
+    $especialidade=$_POST['pessoa-especialidade'];
+    $sql = mysqli_query($con,"INSERT INTO PESSOA(COD_PESSOA, NOME, ENDERECO, TIPO, ESPECIALIDADE, TELEFONE) VALUES ('NULL','".$nome."','".$endereco."','".$tipo."','".$telefone."','".$especialidade."')");
+  } else if ($_GET['add']=='veiculo') {
+    $chassi=$_POST['veiculo-chassi'];
+    $marca=$_POST['veiculo-marca'];
+    $pessoa=$_POST['veiculo-pessoa'];
+    $sql = mysqli_query($con,"INSERT INTO VEICULO(CHASSI,MARCA,COD_PESSOA) VALUES ('".$chassi."','".$marca."','".$pessoa."')");
+  } else if ($_GET['add']=='item') {
+    $descricao=$_POST['item-descricao'];
+    $chassi_item=$_POST['item-veiculo'];
+    $num_os=$_POST['item-numos'];
+    $sql = mysqli_query($con,"INSERT INTO ITEM(COD_ITEM,DESCRICAO,NUM_OS,CHASSI) VALUES ('NULL','".$descricao."','".$chassi_item."','".$num_os."')");
+  }
+}
+?>
