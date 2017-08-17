@@ -3,6 +3,10 @@ body{
   background-color: white;
 }
 
+h2{
+  cursor: pointer;
+}
+
 .arredondado{
   border-radius: 10px;
 }

@@ -4,9 +4,9 @@ function main() {
   //$('#item-garantia').hide();
   $('#item-fornecedor').hide();
   $('.botao').next().hide();
-  $('.botao').on('click', function () {
-    $(this).next().slideToggle();
-  })
+  $('.collapsable').next().hide();
+  $('.botao').on('click', slideNext);
+  $('.collapsable').on('click', slideNext);
   if ($('#pessoa-tipo').options[$('#pessoa-tipo').selectedIndex].text == 'Mecânico'){
     $('#pessoa-especialidade').show();
     $('#pessoa-telefone').hide();
@@ -14,6 +14,10 @@ function main() {
     $('#pessoa-especialidade').hide();
     $('#pessoa-telefone').show();
   }
+}
+
+function slideNext() {
+  $(this).next().slideToggle();
 }
 
 $(document).ready(main);
