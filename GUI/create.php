@@ -11,10 +11,10 @@ require_once 'conexao.php';
   </head>
   <body>
     <div class="container-fluid">
-      <a href="http://localhost/FDB/GUI"><h1 class="text-primary text-center">Oficina Esquema5</h1></a>
+      <h1 class="text-primary text-center" onclick="window.location = 'index.html';">Oficina Esquema5</h1>
       <div class="row">
         <div class="col-md-4">
-          <div class="pessoa">
+          <div class="esquerda arredondado">
             <div class="botao btn btn-primary btn-block">
               Adicionar pessoa
             </div>
@@ -46,10 +46,24 @@ require_once 'conexao.php';
                 <input type="submit" class="btn btn-default btn-block" value="Submeter">
               </form>
             </div>
-        </div>
+          </div>
+          <div class="esquerda arredondado">
+            <div class="botao btn btn-primary btn-block">
+              Adicionar equipe
+            </div>
+            <div>
+              <form action="?add=equipe" method="post">
+                <div class="form-group">
+                  <label for="equipe-nome">Nome:</label>
+                  <input type="text" class="form-control" name="equipe-nome" maxlength="20" placeholder="Ex: Jubilados" required>
+                </div>
+                <input type="submit" class="btn btn-default btn-block" value="Submeter">
+              </form>
+            </div>
+          </div>
         </div>
         <div class="col-md-4">
-          <div class="veiculo">
+          <div class="centro arredondado">
             <div class="botao btn btn-primary btn-block">
               Adicionar veículo
             </div>
@@ -67,7 +81,7 @@ require_once 'conexao.php';
                   <label for="veiculo-pessoa">Pessoa:</label>
                   <select class="form-control" name="veiculo-pessoa">
                   <?php
-                  $result = mysqli_query($con, "SELECT COD_PESSOA FROM PESSOA ORDER BY COD_PESSOA ASC;");
+                  $result = mysqli_query($con, "SELECT COD_PESSOA FROM PESSOA WHERE TIPO = 'C' ORDER BY COD_PESSOA ASC;");
                   while ($pessoa = mysqli_fetch_assoc($result)) { ?>
                     <option><?php echo $pessoa['COD_PESSOA']; ?></option>
                   <?php } ?>
@@ -77,9 +91,77 @@ require_once 'conexao.php';
               </form>
             </div>
           </div>
+          <div class="centro arredondado">
+            <div class="botao btn btn-primary btn-block">
+              Adicionar ordem de serviço
+            </div>
+            <div>
+              <form action="?add=os" method="post">
+                <div class="form-group">
+                  <label for="os-emissao">Data de emissão:</label>
+                  <input type="date" class="form-control" name="os-emissao" placeholder="" required>
+                </div>
+                <div class="form-group">
+                  <label for="os-conclusao">Data de conclusão:</label>
+                  <input type="date" name="os-conclusao" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label for="os-veiculo">Veículo:</label>
+                  <select class="form-control" name="os-veiculo">
+                    <?php
+                    $result = mysqli_query($con, "SELECT CHASSI FROM VEICULO;");
+                    while($chassi = mysqli_fetch_assoc($result)) { ?>
+                    <option><?php echo $chassi['CHASSI']; ?></option>
+                  <?php } ?>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="os-equipe">Equipe:</label>
+                  <select class="form-control" name="os-equipe">
+                    <?php
+                    $result = mysqli_query($con, "SELECT NOME FROM EQUIPE;");
+                    while($nome = mysqli_fetch_assoc($result)) { ?>
+                    <option><?php echo $nome['NOME']; ?></option>
+                  <?php } ?>
+                  </select>
+                </div>
+                <input type="submit" class="btn btn-primary btn-block" value="Submeter">
+              </form>
+            </div>
+          </div>
+          <div class="centro arredondado">
+            <div class="botao btn btn-primary btn-block">
+              Adicionar demanda de peça
+            </div>
+            <div>
+              <form action="?add=demanda" method="post">
+                <div class="form-group">
+                  <label for="demanda-peca">Peça:</label>
+                  <select class="form-control" name="demanda-peca">
+                    <?php
+                    $result = mysqli_query($con, "SELECT COD_PECA FROM PECA;");
+                    while($peca = mysqli_fetch_assoc($result)) { ?>
+                    <option><?php echo $peca['COD_PECA']; ?></option>
+                  <?php } ?>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="demanda-servico">Serviço:</label>
+                  <select class="form-control" name="demanda-servico">
+                    <?php
+                    $result = mysqli_query($con, "SELECT COD_SERVICO FROM SERVICO;");
+                    while($servico = mysqli_fetch_assoc($result)) { ?>
+                    <option><?php echo $servico['COD_SERVICO']; ?></option>
+                  <?php } ?>
+                  </select>
+                </div>
+                <input type="submit" class="btn btn-primary btn-block" value="Submeter">
+              </form>
+            </div>
+          </div>
         </div>
         <div class="col-md-4">
-          <div class="item">
+          <div class="direita arredondado">
             <div class="botao btn btn-primary btn-block">
               Adicionar item
             </div>
@@ -128,6 +210,36 @@ require_once 'conexao.php';
               </form>
             </div>
           </div>
+          <div class="direita arredondado">
+            <div class="botao btn btn-primary btn-block">
+              Adicionar mecânico à equipe
+            </div>
+            <div>
+              <form action="?add=pertence" method="post">
+                <div class="form-group">
+                  <label for="pertence-equipe">Equipe:</label>
+                  <select class="form-control" name="pertence-equipe">
+                    <?php
+                    $result = mysqli_query($con, "SELECT NOME FROM EQUIPE;");
+                    while($equipe = mysqli_fetch_assoc($result)) { ?>
+                    <option><?php echo $equipe['NOME']; ?></option>
+                  <?php } ?>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="pertence-pessoa">Mecânico:</label>
+                  <select class="form-control" name="pertence-pessoa">
+                    <?php
+                    $result = mysqli_query($con, "SELECT NOME FROM PESSOA WHERE TIPO = 'M';");
+                    while($pessoa = mysqli_fetch_assoc($result)) { ?>
+                    <option><?php echo $pessoa['NOME']; ?></option>
+                  <?php } ?>
+                  </select>
+                </div>
+                <input type="submit" class="btn btn-success btn-block" value="Submeter">
+              </form>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -143,12 +255,12 @@ if (isset($_GET['add'])) {
     $tipo=$_POST['pessoa-tipo'];
     $telefone=$_POST['pessoa-telefone'];
     $especialidade=$_POST['pessoa-especialidade'];
-    $sql = mysqli_query($con,"INSERT INTO PESSOA(COD_PESSOA, NOME, ENDERECO, TIPO, ESPECIALIDADE, TELEFONE) VALUES ('NULL','".$nome."','".$endereco."','".$tipo."','".$telefone."','".$especialidade."')");
+    mysqli_query($con,"INSERT INTO PESSOA(COD_PESSOA, NOME, ENDERECO, TIPO, ESPECIALIDADE, TELEFONE) VALUES ('NULL','".$nome."','".$endereco."','".$tipo."','".$telefone."','".$especialidade."')");
   } else if ($_GET['add']=='veiculo') {
     $chassi=$_POST['veiculo-chassi'];
     $marca=$_POST['veiculo-marca'];
     $pessoa=$_POST['veiculo-pessoa'];
-    $sql = mysqli_query($con,"INSERT INTO VEICULO(CHASSI,MARCA,COD_PESSOA) VALUES ('".$chassi."','".$marca."','".$pessoa."')");
+    mysqli_query($con,"INSERT INTO VEICULO(CHASSI,MARCA,COD_PESSOA) VALUES ('".$chassi."','".$marca."','".$pessoa."')");
   } else if ($_GET['add']=='item') {
     $descricao=$_POST['item-descricao'];
     $chassi_item=$_POST['item-veiculo'];
@@ -156,12 +268,32 @@ if (isset($_GET['add'])) {
     $tipo=$_POST['item-tipo'];
     $garantia=$_POST['item-garantia'];
     $fornecedor=$_POST['item-fornecedor'];
-    $sql = mysqli_query($con,"INSERT INTO ITEM(COD_ITEM,DESCRICAO,NUM_OS,CHASSI) VALUES ('NULL','".$descricao."','".$chassi_item."','".$num_os."')");
+    mysqli_query($con,"INSERT INTO ITEM(COD_ITEM,DESCRICAO,NUM_OS,CHASSI) VALUES ('NULL','".$descricao."','".$chassi_item."','".$num_os."')");
     if ($tipo == 'Peça') {
-      $sql = mysqli_query($con, "INSERT INTO PECA(COD_PECA, FORNECEDOR) VALUES ('NULL', '".$fornecedor."')");
+      mysqli_query($con, "INSERT INTO PECA(COD_PECA, FORNECEDOR) VALUES ('NULL', '".$fornecedor."')");
     } else {
-      $sql = mysqli_query($con, "INSERT INTO PECA(COD_SERVICO, GARANTIA) VALUES ('NULL', '".$garantia."')");
+      mysqli_query($con, "INSERT INTO PECA(COD_SERVICO, GARANTIA) VALUES ('NULL', '".$garantia."')");
     }
+  } else if ($_GET['add']=='equipe') {
+    $nome=$_POST['equipe-nome'];
+    mysqli_query($con, "INSERT INTO EQUIPE (ID_EQUIPE, NOME) VALUES ('NULL', '".$nome."')");
+  } else if ($_GET['add']=='os') {
+    $data_emissao = $_POST['os-emissao'];
+    $data_conclusao = $_POST['os-conclusao'];
+    $data_emissao = $_POST['os-emissao'];
+    $chassi = $_POST['os-veiculo'];
+    $equipe = $_POST['os-equipe'];
+    mysqli_query($con, "INSERT INTO ORDEM_SERVICO (NUM_OS, DATA_EMISSAO, DATA_CONCLUSAO, CHASSI, ID_EQUIPE) VALUES ('NULL', '".$data_emissao."', '".$data_conclusao."', '".$chassi."', '".$equipe."')");
+  } else if ($_GET['add']=='pertence') {
+    $equipe_nome = $_POST['pertence-equipe'];
+    $pessoa_nome = $_POST['pertence-pessoa'];
+    $cod_pessoa_pertence = mysqli_fetch_assoc(mysqli_query($con, "SELECT COD_PESSOA FROM PESSOA WHERE NOME = '".$pessoa_nome."'"))['COD_PESSOA'];
+    $cod_equipe_pertence = mysqli_fetch_assoc(mysqli_query($con, "SELECT ID_EQUIPE FROM EQUIPE WHERE NOME = '".$equipe_nome."'"))['ID_EQUIPE'];
+    mysqli_query($con, "INSERT INTO PERTENCE (ID_EQUIPE, COD_PESSOA) VALUES ('".$cod_equipe_pertence."', '".$cod_pessoa_pertence."')");
+  } else if ($_GET['add']=='demanda') {
+    $cod_peca = $_POST['demanda-peca'];
+    $cod_servico = $_POST['demanda-servico'];
+    mysqli_query($con, "INSERT INTO DEMANDA (COD_ITEM_PECA, COD_ITEM_SERVICO) VALUES ('".$cod_peca."','".$cod_servico."')");
   }
 }
 ?>
