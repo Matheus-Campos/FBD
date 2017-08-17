@@ -11,7 +11,7 @@ require_once 'conexao.php';
   </head>
   <body>
     <div class="container-fluid">
-      <h1 class="text-primary text-center">Oficina Esquema5</h1>
+      <a href="http://localhost/FDB/GUI"><h1 class="text-primary text-center">Oficina Esquema5</h1></a>
       <div class="row">
         <div class="col-md-4">
           <div class="pessoa">
@@ -22,11 +22,11 @@ require_once 'conexao.php';
               <form action="?add=pessoa" method="post">
                 <div class="form-group">
                   <label for="pessoa-nome">Nome:</label>
-                  <input type="text" class="form-control" name="pessoa-nome" placeholder="Ex: Filipe" required>
+                  <input type="text" class="form-control" name="pessoa-nome" maxlength="20" placeholder="Ex: Filipe" required>
                 </div>
                 <div class="form-group">
                   <label for="pessoa-endereco">Endereço:</label>
-                  <input type="text" class="form-control" name="pessoa-endereco" placeholder="Ex: Rua Mamanguape, 69" required>
+                  <input type="text" class="form-control" name="pessoa-endereco" maxlength="255" placeholder="Ex: Rua Mamanguape, 69" required>
                 </div>
                 <div class="form-group">
                   <label for="pessoa-tipo">Tipo:</label>
@@ -41,7 +41,7 @@ require_once 'conexao.php';
                 </div>
                 <div class="form-group" id="pessoa-especialidade">
                   <label for="pessoa-especialidade">Especialidade:</label>
-                  <input type="text" class="form-control" name="pessoa-especialidade" placeholder="Motor">
+                  <input type="text" class="form-control" maxlength="20" name="pessoa-especialidade" placeholder="Motor">
                 </div>
                 <input type="submit" class="btn btn-default btn-block" value="Submeter">
               </form>
@@ -57,11 +57,11 @@ require_once 'conexao.php';
               <form action="?add=veiculo" method="post">
                 <div class="form-group">
                   <label for="veiculo-chassi">Chassi:</label>
-                  <input type="text" class="form-control" name="veiculo-chassi" placeholder="Ex: 9BWHE21JX24060960" required>
+                  <input type="text" class="form-control" name="veiculo-chassi" placeholder="Ex: 9BWHE21JX24060960"  maxlength="17" required>
                 </div>
                 <div class="form-group">
                   <label for="veiculo-marca">Marca:</label>
-                  <input type="text" class="form-control" name="veiculo-marca" placeholder="Ex: VOLKSWAGEN" required>
+                  <input type="text" maxlength="20" class="form-control" name="veiculo-marca" placeholder="Ex: VOLKSWAGEN" required>
                 </div>
                 <div class="form-group">
                   <label for="veiculo-pessoa">Pessoa:</label>
@@ -87,7 +87,7 @@ require_once 'conexao.php';
               <form action="?add=item" method="post">
                 <div class="form-group">
                   <label for="item-descricao">Descrição:</label>
-                  <input type="text" class="form-control" name="item-descricao" placeholder="Ex: Alinhamento de carro" required>
+                  <input type="text" maxlength="100" class="form-control" name="item-descricao" placeholder="Ex: Alinhamento de carro" required>
                 </div>
                 <div class="form-group">
                   <label for="item-veiculo">Veículo:</label>
@@ -105,7 +105,7 @@ require_once 'conexao.php';
                     <?php
                     $result = mysqli_query($con, "SELECT NUMERO_OS FROM ORDEM_SERVICO ORDER BY NUMERO_OS ASC;");
                     while ($num_os = mysqli_fetch_assoc($result)) { ?>
-                        <option value=""><?php echo $num_os['NUMERO_OS']; ?></option>
+                        <option><?php echo $num_os['NUMERO_OS']; ?></option>
                   <?php } ?>
                   </select>
                 </div>
@@ -118,10 +118,10 @@ require_once 'conexao.php';
                 </div>
                 <div class="form-group" id="item-fornecedor">
                   <label for="item-fornecedor">Fornecedor:</label>
-                  <input type="text" name="item-fornecedor" placeholder="Ex: Michellin" class="form-control">
+                  <input type="text" maxlength="20" name="item-fornecedor" placeholder="Ex: Michellin" class="form-control">
                 </div>
                 <div class="form-group" id="item-garantia">
-                  <label for="item-garantia">Fornecedor:</label>
+                  <label for="item-garantia">Garantia:</label>
                   <input type="number" name="item-garantia" placeholder="Ex: 2" class="form-control">
                 </div>
                 <input type="submit" class="btn btn-success btn-block" value="Submeter">
@@ -153,9 +153,15 @@ if (isset($_GET['add'])) {
     $descricao=$_POST['item-descricao'];
     $chassi_item=$_POST['item-veiculo'];
     $num_os=$_POST['item-numos'];
+    $tipo=$_POST['item-tipo'];
     $garantia=$_POST['item-garantia'];
     $fornecedor=$_POST['item-fornecedor'];
     $sql = mysqli_query($con,"INSERT INTO ITEM(COD_ITEM,DESCRICAO,NUM_OS,CHASSI) VALUES ('NULL','".$descricao."','".$chassi_item."','".$num_os."')");
+    if ($tipo == 'Peça') {
+      $sql = mysqli_query($con, "INSERT INTO PECA(COD_PECA, FORNECEDOR) VALUES ('NULL', '".$fornecedor."')");
+    } else {
+      $sql = mysqli_query($con, "INSERT INTO PECA(COD_SERVICO, GARANTIA) VALUES ('NULL', '".$garantia."')");
+    }
   }
 }
 ?>

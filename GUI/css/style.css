@@ -3,19 +3,20 @@ body{
   background-color: white;
 }
 
+.arredondado{
+  border-radius: 10px;
+}
+
 .pessoa{
   background-color: whitesmoke;
-  border-radius: 10px;
 }
 
 .veiculo{
   background-color: LightSteelBlue;
-  border-radius: 10px;
 }
 
 .item{
   background-color: SpringGreen;
-  border-radius: 10px;
 }
 
 .botao{
