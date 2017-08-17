@@ -46,7 +46,15 @@ require_once 'conexao.php';
                 <input type="submit" class="btn btn-default btn-block" value="Submeter">
               </form>
             </div>
-          </div>
+            <div class="botao btn btn-primary btn-block">
+              Mostrar pessoa
+            </div>
+            <div>
+              <form action="mostrarpessoa.php" method="post">
+                <input type="submit" class="btn btn-default btn-block" value="Submeter">
+              </form>
+            </div>
+        </div>
         </div>
         <div class="col-md-4">
           <div class="veiculo">
