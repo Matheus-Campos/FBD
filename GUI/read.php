@@ -210,7 +210,6 @@ require_once 'conexao.php';
          </div>
         <?php } ?>
     </div>
-
     <h2 class="text-primary text-center collapsable">TABELA EQUIPE</h2>
     <div>
       <?php
