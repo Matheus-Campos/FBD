@@ -20,7 +20,7 @@ require_once 'conexao.php';
             <div>
               <form action="?update=pessoa" method="post">
                 <div class="form-group">
-                  <input type="text" class="form-control oculto" name="cod-pessoa" <?php echo "value='".$_GET['id']."'"; ?> required>
+                  <input type="text" class="form-control oculto" name="cod-pessoa" <?php echo "value='".$_GET['id']."';"; ?> required>
                 </div>
                 <div class="form-group">
                   <label for="pessoa-nome">Nome:</label>
@@ -90,7 +90,7 @@ require_once 'conexao.php';
             <div>
               <form action="?update=item" method="post">
                 <div class="form-group oculto">
-                  <input type="number" name="cod-item-antigo" class="form-control" <?php echo "value='".$_GET['id']."'"; ?>>
+                  <input type="number" name="cod-item-antigo" class="form-control" <?php echo "value='".$_GET['id']."';"; ?>>
                 </div>
                 <div class="form-group">
                   <label for="item-cod">Código:</label>
@@ -144,6 +144,68 @@ require_once 'conexao.php';
               </form>
             </div>
           </div>
+        <?php } else if($_GET['tabela']=='os'){?>
+          <div class="centro arredondado">
+            <div class="botao btn btn-primary btn-block">
+              Alterar ordem de serviço <?php echo $_GET['id']; ?>
+            </div>
+            <div>
+              <form action="?update=os" method="post">
+                <div class="form-group oculto">
+                  <input type="number" name="num-os" <?php echo "value='".$_GET['id']."';"; ?>>
+                </div>
+                <div class="form-group">
+                  <label for="os-emissao">Data de emissão:</label>
+                  <input type="date" class="form-control" name="os-emissao" placeholder="" required>
+                </div>
+                <div class="form-group">
+                  <label for="os-conclusao">Data de conclusão:</label>
+                  <input type="date" name="os-conclusao" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label for="os-veiculo">Veículo:</label>
+                  <select class="form-control" name="os-veiculo">
+                    <?php
+                    $result = mysqli_query($con, "SELECT CHASSI FROM VEICULO;");
+                    while($chassi = mysqli_fetch_assoc($result)) { ?>
+                    <option><?php echo $chassi['CHASSI']; ?></option>
+                  <?php } ?>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="os-equipe">Equipe:</label>
+                  <select class="form-control" name="os-equipe">
+                    <?php
+                    $result = mysqli_query($con, "SELECT NOME FROM EQUIPE;");
+                    while($nome = mysqli_fetch_assoc($result)) { ?>
+                    <option><?php echo $nome['NOME']; ?></option>
+                  <?php } ?>
+                  </select>
+                </div>
+                <input type="submit" class="btn btn-primary btn-block" value="Submeter">
+              </form>
+            </div>
+          </div>
+        <?php } else if ($_GET['tabela']=='equipe') {?>
+          <div class="esquerda arredondado">
+            <div class="botao btn btn-primary btn-block">
+              Alterar equipe <?php echo $_GET['id']; ?>
+            </div>
+            <div>
+              <form action="?update=equipe" method="post">
+                <div class="form-group oculto">
+                  <input type="number" class="form-control" name="id-equipe" <?php echo "value='".$_GET['id']."';"; ?>required>
+                </div>
+                <div class="form-group">
+                  <label for="equipe-nome">Nome:</label>
+                  <input type="text" class="form-control" name="equipe-nome" maxlength="20" placeholder="Ex: Jubilados" required>
+                </div>
+                <input type="submit" class="btn btn-default btn-block" value="Submeter">
+              </form>
+            </div>
+          </div>
+        <?php } else if ($_GET['tabela']=='pertence') {?>
+        <?php } else if ($_GET['tabela']=='demanda') {?>
         <?php } ?>
       <?php } ?>
       <script type="text/javascript" src="js/jquery-3.2.1.js"></script>
@@ -176,13 +238,26 @@ if (isset($_GET['update'])) {
     if ($tipo == 'P') {
       $fornecedor = $_POST['item-fornecedor'];
       mysqli_query($con, "UPDATE ITEM SET COD_ITEM = '".$cod_item."', DESCRICAO = '".$descricao."', NUM_OS = '".$os."', CHASSI = '".$veiculo."' WHERE COD_ITEM = '".$cod_item_antigo."'");
-      mysqli_query($con, "UPDATE PECA SET COD_PECA = '".$cod_item."', FORNECEDOR = '".$fornecedor."' WHERE COD_PECA = '".$cod_item_antigo."'");
+      mysqli_query($con, "UPDATE PECA SET FORNECEDOR = '".$fornecedor."' WHERE COD_PECA = '".$cod_item."'");
     } else {
       $garantia = $_POST['item-garantia'];
       mysqli_query($con, "UPDATE ITEM SET COD_ITEM = '".$cod_item."', DESCRICAO = '".$descricao."', NUM_OS = '".$os."', CHASSI = '".$veiculo."' WHERE COD_ITEM = '".$cod_item_antigo."'");
-      mysqli_query($con, "UPDATE SERVICO SET COD_SERVICO = '".$cod_item."', FORNECEDOR = '".$garantia."' WHERE COD_SERVICO = '".$cod_item_antigo."'");
+      mysqli_query($con, "UPDATE SERVICO SET GARANTIA = '".$garantia."' WHERE COD_SERVICO = '".$cod_item."'");
     }
 
+  } else if ($_GET['update']=='os') {
+    $numos = $_POST['num-os'];
+    $emissao = $_POST['os-emissao'];
+    $conclusao = $_POST['os-conclusao'];
+    $chassi = $_POST['os-veiculo'];
+    $equipe = $_POST['os-equipe'];
+    mysqli_query($con, "UPDATE ORDEM_SERVICO SET DATA_EMISSAO = '".$emissao."', DATA_CONCLUSAO = '".$conclusao."', CHASSI = '".$chassi."', ID_EQUIPE = '".$equipe."' WHERE NUMERO_OS = '".$numos."'");
+  } else if ($_GET['update']=='equipe') {
+    $id_equipe = $_POST['id-equipe'];
+    $nome = $_POST['equipe-nome'];
+    mysqli_query($con, "UPDATE EQUIPE SET NOME = '".$nome."' WHERE ID_EQUIPE = '".$id_equipe."'");
+  } else if ($_GET['update']=='') {
+    # code...
   }
 }
  ?>
