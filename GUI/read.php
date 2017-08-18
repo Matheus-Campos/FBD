@@ -19,8 +19,8 @@ require_once 'conexao.php';
           <table class="table table-bordered table-striped table-hover">
             <tr><th>Código</th><th>Nome</th><th>Endereço</th><th>Tipo</th><th>Especialidade</th><th>Telefone</th></tr>
            <?php while ($row = $result->fetch_assoc()){
-             $action_update = "?update=pessoa-".$row['COD_PESSOA'];
-             $action_delete = "?delete=pessoa-".$row['COD_PESSOA'];?>
+             $action_update = "update.php?tabela=pessoa&id=".$row['COD_PESSOA'];
+             $action_delete = "delete.php?tabela=pessoa&id=".$row['COD_PESSOA'];?>
                <tr>
                  <td><?php echo $row['COD_PESSOA']; ?></td><td><?php echo $row['NOME']; ?></td>
                  <td><?php echo $row['ENDERECO']; ?></td>
