@@ -16,9 +16,18 @@ function main() {
       $('#pessoa-telefone').show();
     }
   });
+  $('#item-tipo').on('change', function () {
+    if ($(this).val() == 'P') {
+      $('#item-fornecedor').show();
+      $('#item-garantia').hide();
+    } else {
+      $('#item-fornecedor').hide();
+      $('#item-garantia').show();
+    }
+  });
 }
 
-// Por algum motivo, o código comentado abaixo buga o programa.
+// Por algum motivo, o método comentado abaixo buga o programa.
 /*function ocultarMostrarCond(var $ocultar, var $mostrar, var cond) {
   alert($(this).val());
   if ($(this).val() == cond) {

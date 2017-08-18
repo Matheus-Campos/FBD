@@ -169,6 +169,10 @@ require_once 'conexao.php';
             <div>
               <form action="?add=item" method="post">
                 <div class="form-group">
+                  <label for="item-cod">Código:</label>
+                  <input type="text" name="item-cod" class="form-control" placeholder="Ex: 1">
+                </div>
+                <div class="form-group">
                   <label for="item-descricao">Descrição:</label>
                   <input type="text" maxlength="100" class="form-control" name="item-descricao" placeholder="Ex: Alinhamento de carro" required>
                 </div>
@@ -194,9 +198,10 @@ require_once 'conexao.php';
                 </div>
                 <div class="form-group">
                   <label for="item-tipo">Tipo:</label>
-                  <select class="form-control " name="item-tipo">
-                    <option selected>Peça</option>
-                    <option>Serviço</option>
+                  <select class="form-control " name="item-tipo" id="item-tipo">
+                    <option selected>--Nenhum--</option>
+                    <option value="P">Peça</option>
+                    <option value="S">Serviço</option>
                   </select>
                 </div>
                 <div class="form-group" id="item-fornecedor">
@@ -256,24 +261,25 @@ if (isset($_GET['add'])) {
     $tipo=$_POST['pessoa-tipo'];
     $telefone=$_POST['pessoa-telefone'];
     $especialidade=$_POST['pessoa-especialidade'];
-    mysqli_query($con,"INSERT INTO PESSOA(COD_PESSOA, NOME, ENDERECO, TIPO, ESPECIALIDADE, TELEFONE) VALUES ('NULL','".$nome."','".$endereco."','".$tipo."','".$telefone."','".$especialidade."')");
+    mysqli_query($con,"INSERT INTO PESSOA(COD_PESSOA, NOME, ENDERECO, TIPO, ESPECIALIDADE, TELEFONE) VALUES ('NULL','".$nome."','".$endereco."','".$tipo."','".$especialidade."','".$telefone."')");
   } else if ($_GET['add']=='veiculo') {
     $chassi=$_POST['veiculo-chassi'];
     $marca=$_POST['veiculo-marca'];
     $pessoa=$_POST['veiculo-pessoa'];
     mysqli_query($con,"INSERT INTO VEICULO(CHASSI,MARCA,COD_PESSOA) VALUES ('".$chassi."','".$marca."','".$pessoa."')");
   } else if ($_GET['add']=='item') {
+    $cod_item = $_POST['item-cod'];
     $descricao=$_POST['item-descricao'];
     $chassi_item=$_POST['item-veiculo'];
     $num_os=$_POST['item-numos'];
     $tipo=$_POST['item-tipo'];
     $garantia=$_POST['item-garantia'];
     $fornecedor=$_POST['item-fornecedor'];
-    mysqli_query($con,"INSERT INTO ITEM(COD_ITEM,DESCRICAO,NUM_OS,CHASSI) VALUES ('NULL','".$descricao."','".$chassi_item."','".$num_os."')");
+    mysqli_query($con,"INSERT INTO ITEM(COD_ITEM,DESCRICAO,NUM_OS,CHASSI) VALUES ('".$cod_item."','".$descricao."','".$chassi_item."','".$num_os."')");
     if ($tipo == 'Peça') {
-      mysqli_query($con, "INSERT INTO PECA(COD_PECA, FORNECEDOR) VALUES ('NULL', '".$fornecedor."')");
+      mysqli_query($con, "INSERT INTO PECA(COD_PECA, FORNECEDOR) VALUES ('".$cod_item."', '".$fornecedor."')");
     } else {
-      mysqli_query($con, "INSERT INTO PECA(COD_SERVICO, GARANTIA) VALUES ('NULL', '".$garantia."')");
+      mysqli_query($con, "INSERT INTO PECA(COD_SERVICO, GARANTIA) VALUES ('".$cod_item."', '".$garantia."')");
     }
   } else if ($_GET['add']=='equipe') {
     $nome=$_POST['equipe-nome'];
@@ -281,9 +287,9 @@ if (isset($_GET['add'])) {
   } else if ($_GET['add']=='os') {
     $data_emissao = $_POST['os-emissao'];
     $data_conclusao = $_POST['os-conclusao'];
-    $data_emissao = $_POST['os-emissao'];
     $chassi = $_POST['os-veiculo'];
     $equipe = $_POST['os-equipe'];
+    echo $data_emissao;
     mysqli_query($con, "INSERT INTO ORDEM_SERVICO (NUM_OS, DATA_EMISSAO, DATA_CONCLUSAO, CHASSI, ID_EQUIPE) VALUES ('NULL', '".$data_emissao."', '".$data_conclusao."', '".$chassi."', '".$equipe."')");
   } else if ($_GET['add']=='pertence') {
     $equipe_nome = $_POST['pertence-equipe'];
