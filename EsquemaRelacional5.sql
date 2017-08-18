@@ -2,7 +2,7 @@
 -- Grupo: Filipe Carlos e Matheus Campos
 
 -- se já existe um esquema empresa, delete
-DROP DATABASE EMPRESA;
+DROP SCHEMA EMPRESA;
 
 -- criando esquema
 CREATE DATABASE EMPRESA;
@@ -18,8 +18,15 @@ CREATE TABLE PESSOA (
 	TELEFONE INTEGER(8)
 );
 
+CREATE TABLE EQUIPE(
+	ID_EQUIPE INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	NOME VARCHAR(20) NOT NULL,
+
+	UNIQUE(NOME)
+);
+
 CREATE TABLE VEICULO (
-	CHASSI VARCHAR(17) NOT NULL,
+	CHASSI VARCHAR(17) NOT NULL PRIMARY KEY,
 	MARCA VARCHAR(20) NOT NULL,
 	COD_PESSOA INTEGER
 );
@@ -28,16 +35,18 @@ CREATE TABLE ORDEM_SERVICO (
 	NUMERO_OS INTEGER NOT NULL AUTO_INCREMENT,
 	DATA_EMISSAO VARCHAR(10) NOT NULL,
 	DATA_CONCLUSAO VARCHAR(10),
-	CHASSI VARCHAR(20),
+	CHASSI VARCHAR(17) NOT NULL,
 	ID_EQUIPE INTEGER,
-    PRIMARY KEY(NUMERO_OS,CHASSI)
+    
+    PRIMARY KEY(NUMERO_OS,CHASSI),
+    FOREIGN KEY (CHASSI) references VEICULO(CHASSI) on update no action on delete cascade
 );
 
 CREATE TABLE ITEM (
 	COD_ITEM INTEGER NOT NULL PRIMARY KEY,
 	DESCRICAO VARCHAR(100),
 	NUM_OS INTEGER,
-	CHASSI VARCHAR(20),
+	CHASSI VARCHAR(17),
     FOREIGN KEY(NUM_OS) references ORDEM_SERVICO(NUMERO_OS)
 );
 
@@ -54,13 +63,6 @@ CREATE TABLE SERVICO(
 CREATE TABLE DEMANDA (
 	COD_ITEM_PECA INTEGER NOT NULL,
 	COD_ITEM_SERVICO INTEGER NOT NULL
-);
-
-CREATE TABLE EQUIPE(
-	ID_EQUIPE INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
-	NOME VARCHAR(20) NOT NULL,
-
-	UNIQUE(NOME)
 );
 
 CREATE TABLE PERTENCE (
@@ -145,16 +147,14 @@ INSERT INTO PERTENCE (ID_EQUIPE, COD_PESSOA) VALUES
 
 -- aplicando as restrições de integridade
 -- chaves primárias
-alter table VEICULO add constraint pk_VEICULO primary key (CHASSI);
 alter table PECA add constraint pk_PECA primary key (COD_PECA);
 alter table SERVICO add constraint pk_SERVICO primary key (COD_SERVICO);
 alter table PERTENCE add constraint pk_PERTENCE primary key CLUSTERED(ID_EQUIPE, COD_PESSOA);
 alter table DEMANDA add constraint pk_DEMANDA primary key CLUSTERED(COD_ITEM_PECA, COD_ITEM_SERVICO);
 
 -- chaves estrangeiras
+alter table ORDEM_SERVICO add constraint fk_ORDEM_SERVICO_EQUIPE FOREIGN KEY (ID_EQUIPE) references EQUIPE(ID_EQUIPE) on update cascade on delete set NULL;
 alter table VEICULO add constraint fk_VEICULO_PESSOA foreign key (COD_PESSOA) references PESSOA(COD_PESSOA) on update cascade on delete set NULL;
-alter table ORDEM_SERVICO add constraint fk_ORDEM_SERVICO_VEICULO foreign key (CHASSI) references VEICULO(CHASSI) on update no action on delete cascade;
-alter table ORDEM_SERVICO add constraint fk_ORDEM_SERVICO_EQUIPE foreign key (ID_EQUIPE) references EQUIPE(ID_EQUIPE) on update cascade on delete set NULL;
 alter table ITEM add constraint fk_ITEM_VEICULO foreign key (CHASSI) references VEICULO(CHASSI) on update no action on delete cascade;
 alter table PECA add constraint fk_PECA_ITEM foreign key (COD_PECA) references ITEM(COD_ITEM) on update cascade on delete cascade;
 alter table SERVICO add constraint fk_SERVICO_ITEM foreign key (COD_SERVICO) references ITEM(COD_ITEM) on update cascade on delete cascade;

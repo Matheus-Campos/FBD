@@ -49,8 +49,8 @@ require_once 'conexao.php';
           <table class="table table-bordered table-striped table-hover">
             <tr><th>Chassi</th><th>Marca</th><th>Pessoa (ID)</th></tr>
            <?php while ($row = $result->fetch_assoc()){
-             $action_update = "update.php?tabela=veiculo&id=".$row['CHASSI'];
-             $action_delete = "delete.php?tabela=veiculo&id=".$row['CHASSI'];?>
+             $action_update = "?update=veiculo-".$row['CHASSI'];
+             $action_delete = "?delete=veiculo-".$row['CHASSI'];?>
                <tr>
                  <td><?php echo $row['CHASSI']; ?></td>
                  <td><?php echo $row['MARCA']; ?></td>
@@ -77,8 +77,9 @@ require_once 'conexao.php';
           <table class="table table-bordered table-striped table-hover">
             <tr><th>Número de Ordem</th><th>Chassi</th><th>Data de Emissão</th><th>Data de Conclusão</th><th>Código da Equipe</th></tr>
            <?php while ($row = $result->fetch_assoc()){
-             $action_update = "update.php?tabela=os&id=".$row['NUMERO_OS'];
-             $action_delete = "delete.php?tabela=os&id=".$row['NUMERO_OS'];?>
+             #As 2 chaves são primárias
+             $action_update = "?update=os-".$row['NUMERO_OS'];
+             $action_delete = "?delete=os-".$row['NUMERO_OS'];?>
                <tr>
                  <td><?php echo $row['NUMERO_OS']; ?></td>
                  <td><?php echo $row['CHASSI']; ?></td>
@@ -107,8 +108,8 @@ require_once 'conexao.php';
           <table class="table table-bordered table-striped table-hover">
             <tr><th>Código do Item</th><th>Descrição</th><th>Número de Ordem</th><th>Chassi</th></tr>
            <?php while ($row = $result->fetch_assoc()){
-             $action_update = "update.php?tabela=item&id=".$row['COD_ITEM'];
-             $action_delete = "delete.php?tabela=item&id=".$row['COD_ITEM'];?>
+             $action_update = "?update=item-".$row['COD_ITEM'];
+             $action_delete = "?delete=item-".$row['COD_ITEM'];?>
                <tr>
                  <td><?php echo $row['COD_ITEM']; ?></td>
                  <td><?php echo $row['DESCRICAO']; ?></td>
@@ -131,16 +132,22 @@ require_once 'conexao.php';
     <div>
       <?php
       $result = $con->query('SELECT * FROM PECA');
-      if($result){?>
+      if($result){?>MAURINHO GOD
         <div class="table-responsive">
           <table class="table table-bordered table-striped table-hover">
             <tr><th>Código da Peça</th><th>Fornecedor</th></tr>
            <?php while ($row = $result->fetch_assoc()){
-            ?>
+             $action_update = "?update=peca-".$row['COD_PECA'];
+             $action_delete = "?delete=peca-".$row['COD_PECA'];?>
                <tr>
                  <td><?php echo $row['COD_PECA']; ?></td>
                  <td><?php echo $row['FORNECEDOR']; ?></td>
-
+                 <td><form <?php echo "action='".$action_update."'"; ?> method="post">
+                   <input type="submit" class="btn btn-info btn-block" value="UPDATE">
+                 </form></td>
+                 <td><form <?php echo "action='".$action_delete."'"; ?> method="post">
+                   <input type="submit" class="btn btn-danger btn-block" value="DELETE">
+                 </form></td>
                </tr>
            <?php }
            $result->free(); ?>
@@ -157,11 +164,17 @@ require_once 'conexao.php';
           <table class="table table-bordered table-striped table-hover">
             <tr><th>Código do Serviço</th><th>Garantia/ano</th></tr>
            <?php while ($row = $result->fetch_assoc()){
-             ?>
+             $action_update = "?update=servico-".$row['COD_SERVICO'];
+             $action_delete = "?delete=servico-".$row['COD_SERVICO'];?>
                <tr>
                  <td><?php echo $row['COD_SERVICO']; ?></td>
                  <td><?php echo $row['GARANTIA']; ?></td>
-
+                 <td><form <?php echo "action='".$action_update."'"; ?> method="post">
+                   <input type="submit" class="btn btn-info btn-block" value="UPDATE">
+                 </form></td>
+                 <td><form <?php echo "action='".$action_delete."'"; ?> method="post">
+                   <input type="submit" class="btn btn-danger btn-block" value="DELETE">
+                 </form></td>
                </tr>
            <?php }
            $result->free(); ?>
@@ -178,8 +191,9 @@ require_once 'conexao.php';
           <table class="table table-bordered table-striped table-hover">
             <tr><th>Código da Peça</th><th>Código do Serviço</th></tr>
            <?php while ($row = $result->fetch_assoc()){
-             $action_update = "update.php?tabela=demanda&id1=".$row['COD_ITEM_PECA']."&id2=".$row['COD_ITEM_SERVICO'];
-             $action_delete = "delete.php?tabela=demanda&id1=".$row['COD_ITEM_PECA']."&id2=".$row['COD_ITEM_SERVICO'];?>
+             #As 2 chaves são primárias
+             $action_update = "?update=demanda-".$row['COD_ITEM_PECA']."-".$row['COD_ITEM_SERVICO'];
+             $action_delete = "?delete=demanda-".$row['COD_ITEM_PECA']."-".$row['COD_ITEM_SERVICO'];?>
                <tr>
                  <td><?php echo $row['COD_ITEM_PECA']; ?></td>
                  <td><?php echo $row['COD_ITEM_SERVICO']; ?></td>
@@ -205,8 +219,8 @@ require_once 'conexao.php';
           <table class="table table-bordered table-striped table-hover">
             <tr><th>Código da Equipe</th><th>Nome da Equipe</th></tr>
            <?php while ($row = $result->fetch_assoc()){
-             $action_update = "update.php?tabela=equipe&id=".$row['ID_EQUIPE'];
-             $action_delete = "delete.php?tabela=equipe&id=".$row['ID_EQUIPE'];?>
+             $action_update = "?update=equipe-".$row['ID_EQUIPE'];
+             $action_delete = "?delete=equipe-".$row['ID_EQUIPE'];?>
                <tr>
                  <td><?php echo $row['ID_EQUIPE']; ?></td>
                  <td><?php echo $row['NOME']; ?></td>
@@ -232,8 +246,8 @@ require_once 'conexao.php';
           <table class="table table-bordered table-striped table-hover">
             <tr><th>Código da Equipe</th><th>Código do mecânico</th></tr>
            <?php while ($row = $result->fetch_assoc()){
-             $action_update = "update.php?tabela=pertence&id1=".$row['ID_EQUIPE']."&id2=".$row['COD_PESSOA'];
-             $action_delete = "delete.php?tabela=pertence&id1=".$row['ID_EQUIPE']."&id2=".$row['COD_PESSOA'];?>
+             $action_update = "?update=pertence-".$row['ID_EQUIPE']."-".$row['COD_PESSOA'];
+             $action_delete = "?delete=pertence-".$row['ID_EQUIPE']."-".$row['COD_PESSOA'];?>
                <tr>
                  <td><?php echo $row['ID_EQUIPE']; ?></td>
                  <td><?php echo $row['COD_PESSOA']; ?></td>
