@@ -1,8 +1,5 @@
 function main() {
-  $('#pessoa-telefone').hide();
-  $('#pessoa-especialidade').hide();
-  $('#item-garantia').hide();
-  $('#item-fornecedor').hide();
+  $('.oculto').hide();
   $('.botao').next().hide();
   $('.collapsable').next().hide();
   $('.botao').on('click', slideNext);
@@ -27,7 +24,8 @@ function main() {
   });
 }
 
-// Por algum motivo, o método comentado abaixo buga o programa.
+// Por algum motivo o método comentado abaixo buga o programa
+// Mesmo que não seja chamado.
 /*function ocultarMostrarCond(var $ocultar, var $mostrar, var cond) {
   alert($(this).val());
   if ($(this).val() == cond) {

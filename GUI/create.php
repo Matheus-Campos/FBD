@@ -36,11 +36,11 @@ require_once 'conexao.php';
                     <option value="C">Cliente</option>
                   </select>
                 </div>
-                <div class="form-group" id="pessoa-telefone">
+                <div class="form-group oculto" id='pessoa-telefone'>
                   <label for="pessoa-telefone">Telefone:</label>
                   <input type="number" class="form-control" name="pessoa-telefone" placeholder="40028922">
                 </div>
-                <div class="form-group" id="pessoa-especialidade">
+                <div class="form-group oculto" id='pessoa-especialidade'>
                   <label for="pessoa-especialidade">Especialidade:</label>
                   <input type="text" class="form-control" maxlength="20" name="pessoa-especialidade" placeholder="Motor">
                 </div>
@@ -170,7 +170,7 @@ require_once 'conexao.php';
               <form action="?add=item" method="post">
                 <div class="form-group">
                   <label for="item-cod">Código:</label>
-                  <input type="text" name="item-cod" class="form-control" placeholder="Ex: 1">
+                  <input type="number" name="item-cod" class="form-control" placeholder="Ex: 1">
                 </div>
                 <div class="form-group">
                   <label for="item-descricao">Descrição:</label>
@@ -204,11 +204,11 @@ require_once 'conexao.php';
                     <option value="S">Serviço</option>
                   </select>
                 </div>
-                <div class="form-group" id="item-fornecedor">
+                <div class="form-group oculto" id="item-fornecedor">
                   <label for="item-fornecedor">Fornecedor:</label>
                   <input type="text" maxlength="20" name="item-fornecedor" placeholder="Ex: Michellin" class="form-control">
                 </div>
-                <div class="form-group" id="item-garantia">
+                <div class="form-group oculto" id="item-garantia">
                   <label for="item-garantia">Garantia:</label>
                   <input type="number" name="item-garantia" placeholder="Ex: 2" class="form-control">
                 </div>
