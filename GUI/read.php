@@ -136,17 +136,11 @@ require_once 'conexao.php';
           <table class="table table-bordered table-striped table-hover">
             <tr><th>Código da Peça</th><th>Fornecedor</th></tr>
            <?php while ($row = $result->fetch_assoc()){
-             $action_update = "update.php?tabela=peca&id=".$row['COD_PECA'];
-             $action_delete = "delete.php?tabela=peca&id=".$row['COD_PECA'];?>
+            ?>
                <tr>
                  <td><?php echo $row['COD_PECA']; ?></td>
                  <td><?php echo $row['FORNECEDOR']; ?></td>
-                 <td><form <?php echo "action='".$action_update."'"; ?> method="post">
-                   <input type="submit" class="btn btn-info btn-block" value="UPDATE">
-                 </form></td>
-                 <td><form <?php echo "action='".$action_delete."'"; ?> method="post">
-                   <input type="submit" class="btn btn-danger btn-block" value="DELETE">
-                 </form></td>
+
                </tr>
            <?php }
            $result->free(); ?>
@@ -163,17 +157,11 @@ require_once 'conexao.php';
           <table class="table table-bordered table-striped table-hover">
             <tr><th>Código do Serviço</th><th>Garantia/ano</th></tr>
            <?php while ($row = $result->fetch_assoc()){
-             $action_update = "update.php?tabela=servico&id=".$row['COD_SERVICO'];
-             $action_delete = "delete.php?tabela=servico&id=".$row['COD_SERVICO'];?>
+             ?>
                <tr>
                  <td><?php echo $row['COD_SERVICO']; ?></td>
                  <td><?php echo $row['GARANTIA']; ?></td>
-                 <td><form <?php echo "action='".$action_update."'"; ?> method="post">
-                   <input type="submit" class="btn btn-info btn-block" value="UPDATE">
-                 </form></td>
-                 <td><form <?php echo "action='".$action_delete."'"; ?> method="post">
-                   <input type="submit" class="btn btn-danger btn-block" value="DELETE">
-                 </form></td>
+
                </tr>
            <?php }
            $result->free(); ?>
