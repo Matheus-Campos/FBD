@@ -276,10 +276,13 @@ if (isset($_GET['add'])) {
     $garantia=$_POST['item-garantia'];
     $fornecedor=$_POST['item-fornecedor'];
     mysqli_query($con,"INSERT INTO ITEM(COD_ITEM,DESCRICAO,NUM_OS,CHASSI) VALUES ('".$cod_item."','".$descricao."','".$chassi_item."','".$num_os."')");
-    echo($tipo);
+    echo($tipo. "\n");
     if ($tipo == 'P') {
       mysqli_query($con, "INSERT INTO PECA(COD_PECA, FORNECEDOR) VALUES ('".$cod_item."', '".$fornecedor."')");
     } else {
+      echo("CHEGOU AQUI\n");
+      echo($cod_item. "\n");
+      echo($garantia);
       mysqli_query($con, "INSERT INTO SERVICO(COD_SERVICO, GARANTIA) VALUES ('".$cod_item."', '".$garantia."')");
     }
   } else if ($_GET['add']=='equipe') {
