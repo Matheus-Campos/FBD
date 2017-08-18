@@ -7,6 +7,10 @@ h1, h2{
   cursor: pointer;
 }
 
+.space-bot{
+  margin-bottom: 10px;
+}
+
 .arredondado{
   border-radius: 10px;
 }

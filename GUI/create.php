@@ -31,8 +31,9 @@ require_once 'conexao.php';
                 <div class="form-group">
                   <label for="pessoa-tipo">Tipo:</label>
                   <select class="form-control" name="pessoa-tipo" id="pessoa-tipo">
-                    <option selected>Mecânico</option>
-                    <option>Cliente</option>
+                    <option selected>--Nenhum--</option>
+                    <option value="M">Mecânico</option>
+                    <option value="C">Cliente</option>
                   </select>
                 </div>
                 <div class="form-group" id="pessoa-telefone">
