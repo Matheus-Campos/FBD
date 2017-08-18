@@ -275,7 +275,10 @@ if (isset($_GET['add'])) {
     $tipo=$_POST['item-tipo'];
     $garantia=$_POST['item-garantia'];
     $fornecedor=$_POST['item-fornecedor'];
-    mysqli_query($con,"INSERT INTO ITEM(COD_ITEM,DESCRICAO,NUM_OS,CHASSI) VALUES ('".$cod_item."','".$descricao."','".$chassi_item."','".$num_os."')");
+    $insere="INSERT INTO ITEM(COD_ITEM,DESCRICAO,NUM_OS,CHASSI) VALUES ('".$cod_item."','".$descricao."','".$num_os."','".$chassi_item."')";
+    echo($insere);
+    mysqli_query($con,$insere);
+    echo($tipo);
     if ($tipo == 'P') {
       mysqli_query($con, "INSERT INTO PECA(COD_PECA, FORNECEDOR) VALUES ('".$cod_item."', '".$fornecedor."')");
     } else {
@@ -289,7 +292,9 @@ if (isset($_GET['add'])) {
     $data_conclusao = $_POST['os-conclusao'];
     $chassi = $_POST['os-veiculo'];
     $equipe = $_POST['os-equipe'];
-    mysqli_query($con, "INSERT INTO ORDEM_SERVICO (NUMERO_OS, DATA_EMISSAO, DATA_CONCLUSAO, CHASSI, ID_EQUIPE) VALUES ('NULL', '".$data_emissao."', '".$data_conclusao."', '".$chassi."', '".$equipe."')");
+    $insere = "INSERT INTO ORDEM_SERVICO (NUMERO_OS, DATA_EMISSAO, DATA_CONCLUSAO, CHASSI, ID_EQUIPE) VALUES ('NULL', '".$data_emissao."', '".$data_conclusao."', '".$chassi."', '".$equipe."')";
+    echo($insere);
+    mysqli_query($con, $insere);
   } else if ($_GET['add']=='pertence') {
     $equipe_nome = $_POST['pertence-equipe'];
     $pessoa_nome = $_POST['pertence-pessoa'];
