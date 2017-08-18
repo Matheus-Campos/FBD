@@ -276,9 +276,7 @@ if (isset($_GET['add'])) {
     $garantia=$_POST['item-garantia'];
     $fornecedor=$_POST['item-fornecedor'];
     $insere="INSERT INTO ITEM(COD_ITEM,DESCRICAO,NUM_OS,CHASSI) VALUES ('".$cod_item."','".$descricao."','".$num_os."','".$chassi_item."')";
-    echo($insere);
     mysqli_query($con,$insere);
-    echo($tipo);
     if ($tipo == 'P') {
       mysqli_query($con, "INSERT INTO PECA(COD_PECA, FORNECEDOR) VALUES ('".$cod_item."', '".$fornecedor."')");
     } else {
@@ -293,7 +291,11 @@ if (isset($_GET['add'])) {
     $chassi = $_POST['os-veiculo'];
     $equipe = $_POST['os-equipe'];
     $insere = "INSERT INTO ORDEM_SERVICO (NUMERO_OS, DATA_EMISSAO, DATA_CONCLUSAO, CHASSI, ID_EQUIPE) VALUES ('NULL', '".$data_emissao."', '".$data_conclusao."', '".$chassi."', '".$equipe."')";
-    echo($insere);
+    echo ($insere);
+    echo gettype($data_emissao);
+    echo gettype($data_conclusao);
+    echo gettype($chassi);
+    echo gettype($equipe);
     mysqli_query($con, $insere);
   } else if ($_GET['add']=='pertence') {
     $equipe_nome = $_POST['pertence-equipe'];

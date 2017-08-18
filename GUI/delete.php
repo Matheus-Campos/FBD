@@ -12,9 +12,9 @@
   } else if ($_GET['tabela']=='equipe') {
     mysqli_query($con, "DELETE FROM EQUIPE WHERE ID_EQUIPE = '".$_GET['id']."'");
   } else if ($_GET['tabela']=='pertence') {
-    mysqli_query($con, "DELETE FROM PERTENCE WHERE ID_EQUIPE = '".$_GET['id1']."' AND COD_PESSOA = '".$_GET['id2']."'")
+    mysqli_query($con, "DELETE FROM PERTENCE WHERE ID_EQUIPE = '".$_GET['id1']."' AND COD_PESSOA = '".$_GET['id2']."'");
   } else if ($_GET['tabela']=='demanda') {
-    mysqli_query($con, "DELETE FROM DEMANDA WHERE COD_ITEM_PECA = '".$_GET['id1']."' AND COD_ITEM_SERVICO = '".$_GET['id2']."'")
+    mysqli_query($con, "DELETE FROM DEMANDA WHERE COD_ITEM_PECA = '".$_GET['id1']."' AND COD_ITEM_SERVICO = '".$_GET['id2']."'");
   }
 ?>
 <html>
