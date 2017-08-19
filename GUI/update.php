@@ -30,6 +30,9 @@ require_once 'conexao.php';
                   <label for="pessoa-endereco">Endereço:</label>
                   <input type="text" class="form-control" name="pessoa-endereco" maxlength="255" placeholder="Ex: Rua Mamanguape, 69" required>
                 </div>
+                <?php $result = mysqli_query($con, "SELECT TIPO FROM PESSOA WHERE COD_PESSOA = '".$_GET['id']."'");
+
+                 ?>
                 <!--<div class="form-group">
                   <label for="pessoa-tipo">Tipo:</label>
                   <select class="form-control" name="pessoa-tipo" id="pessoa-tipo">
@@ -217,9 +220,9 @@ require_once 'conexao.php';
                   <label for="pertence-equipe">Equipe:</label>
                   <select class="form-control" name="pertence-equipe">
                     <?php
-                    $result = mysqli_query($con, "SELECT NOME FROM EQUIPE;");
+                    $result = mysqli_query($con, "SELECT ID_EQUIPE FROM EQUIPE;");
                     while($equipe = mysqli_fetch_assoc($result)) { ?>
-                    <option><?php echo $equipe['NOME']; ?></option>
+                    <option><?php echo $equipe['ID_EQUIPE']; ?></option>
                   <?php } ?>
                   </select>
                 </div>
@@ -227,9 +230,9 @@ require_once 'conexao.php';
                   <label for="pertence-pessoa">Mecânico:</label>
                   <select class="form-control" name="pertence-pessoa">
                     <?php
-                    $result = mysqli_query($con, "SELECT NOME FROM PESSOA WHERE TIPO = 'M';");
+                    $result = mysqli_query($con, "SELECT COD_PESSOA FROM PESSOA WHERE TIPO = 'M';");
                     while($pessoa = mysqli_fetch_assoc($result)) { ?>
-                    <option><?php echo $pessoa['NOME']; ?></option>
+                    <option><?php echo $pessoa['COD_PESSOA']; ?></option>
                   <?php } ?>
                   </select>
                 </div>
