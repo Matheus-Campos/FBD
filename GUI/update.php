@@ -20,7 +20,7 @@ require_once 'conexao.php';
             <div>
               <form action="?update=pessoa" method="post">
                 <div class="form-group">
-                  <input type="text" class="form-control oculto" name="cod-pessoa" <?php echo "value='".$_GET['id']."';"; ?> required>
+                  <input type="text" class="form-control oculto" name="cod-pessoa" <?php echo "value='".$_GET['id']."'"; ?> required>
                 </div>
                 <div class="form-group">
                   <label for="pessoa-nome">Nome:</label>
@@ -90,7 +90,7 @@ require_once 'conexao.php';
             <div>
               <form action="?update=item" method="post">
                 <div class="form-group oculto">
-                  <input type="number" name="cod-item-antigo" class="form-control" <?php echo "value='".$_GET['id']."';"; ?>>
+                  <input type="number" name="cod-item-antigo" class="form-control" <?php echo "value='".$_GET['id']."'"; ?>>
                 </div>
                 <div class="form-group">
                   <label for="item-cod">Código:</label>
@@ -152,7 +152,7 @@ require_once 'conexao.php';
             <div>
               <form action="?update=os" method="post">
                 <div class="form-group oculto">
-                  <input type="number" name="num-os" <?php echo "value='".$_GET['id']."';"; ?>>
+                  <input type="number" name="num-os" <?php echo "value='".$_GET['id']."'"; ?>>
                 </div>
                 <div class="form-group">
                   <label for="os-emissao">Data de emissão:</label>
@@ -194,7 +194,7 @@ require_once 'conexao.php';
             <div>
               <form action="?update=equipe" method="post">
                 <div class="form-group oculto">
-                  <input type="number" class="form-control" name="id-equipe" <?php echo "value='".$_GET['id']."';"; ?>required>
+                  <input type="number" class="form-control" name="id-equipe" <?php echo "value='".$_GET['id']."'"; ?>required>
                 </div>
                 <div class="form-group">
                   <label for="equipe-nome">Nome:</label>
@@ -205,7 +205,71 @@ require_once 'conexao.php';
             </div>
           </div>
         <?php } else if ($_GET['tabela']=='pertence') {?>
+          <div class="direita arredondado">
+            <div class="botao btn btn-primary btn-block">
+              Alterar relação pertence <?php echo $_GET['id1']."-".$_GET['id2']; ?>
+            </div>
+            <div>
+              <form action="?update=pertence" method="post">
+                <input type="number" name="pertence-equipe-antigo" class="oculto" <?php echo "value='".$_GET['id1']."'"; ?>>
+                <input type="number" name="pertence-pessoa-antigo" class="oculto" <?php echo "value='".$_GET['id2']."'"; ?>>
+                <div class="form-group">
+                  <label for="pertence-equipe">Equipe:</label>
+                  <select class="form-control" name="pertence-equipe">
+                    <?php
+                    $result = mysqli_query($con, "SELECT NOME FROM EQUIPE;");
+                    while($equipe = mysqli_fetch_assoc($result)) { ?>
+                    <option><?php echo $equipe['NOME']; ?></option>
+                  <?php } ?>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="pertence-pessoa">Mecânico:</label>
+                  <select class="form-control" name="pertence-pessoa">
+                    <?php
+                    $result = mysqli_query($con, "SELECT NOME FROM PESSOA WHERE TIPO = 'M';");
+                    while($pessoa = mysqli_fetch_assoc($result)) { ?>
+                    <option><?php echo $pessoa['NOME']; ?></option>
+                  <?php } ?>
+                  </select>
+                </div>
+                <input type="submit" class="btn btn-success btn-block" value="Submeter">
+              </form>
+            </div>
+          </div>
         <?php } else if ($_GET['tabela']=='demanda') {?>
+          <div class="centro arredondado">
+            <div class="botao btn btn-primary btn-block">
+              Alterar demanda da peca <?php echo $_GET['id1']." e serviço ".$_GET['id2']; ?>
+            </div>
+            <div>
+              <form action="?update=demanda" method="post">
+                <input type="number" name="demanda-peca-antigo" class="oculto" <?php echo "value='".$_GET['id1']."'"; ?>>
+                <input type="number" name="demanda-servico-antigo" class="oculto" <?php echo "value='".$_GET['id2']."'"; ?>>
+                <div class="form-group">
+                  <label for="demanda-peca">Peça:</label>
+                  <select class="form-control" name="demanda-peca">
+                    <?php
+                    $result = mysqli_query($con, "SELECT COD_PECA FROM PECA;");
+                    while($peca = mysqli_fetch_assoc($result)) { ?>
+                    <option><?php echo $peca['COD_PECA']; ?></option>
+                  <?php } ?>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="demanda-servico">Serviço:</label>
+                  <select class="form-control" name="demanda-servico">
+                    <?php
+                    $result = mysqli_query($con, "SELECT COD_SERVICO FROM SERVICO;");
+                    while($servico = mysqli_fetch_assoc($result)) { ?>
+                    <option><?php echo $servico['COD_SERVICO']; ?></option>
+                  <?php } ?>
+                  </select>
+                </div>
+                <input type="submit" class="btn btn-primary btn-block" value="Submeter">
+              </form>
+            </div>
+          </div>
         <?php } ?>
       <?php } ?>
       <script type="text/javascript" src="js/jquery-3.2.1.js"></script>
@@ -256,8 +320,18 @@ if (isset($_GET['update'])) {
     $id_equipe = $_POST['id-equipe'];
     $nome = $_POST['equipe-nome'];
     mysqli_query($con, "UPDATE EQUIPE SET NOME = '".$nome."' WHERE ID_EQUIPE = '".$id_equipe."'");
-  } else if ($_GET['update']=='') {
-    # code...
+  } else if ($_GET['update']=='pertence') {
+    $pertence_equipe_antigo = $_POST['pertence-equipe-antigo'];
+    $pertence_pessoa_antigo = $_POST['pertence-pessoa-antigo'];
+    $equipe = $_POST['pertence-equipe'];
+    $pessoa = $_POST['pertence-pessoa'];
+    mysqli_query($con, "UPDATE PERTENCE SET ID_EQUIPE = '".$equipe."', COD_PESSOA = '".$pessoa."' WHERE ID_EQUIPE = '".$pertence_equipe_antigo."' AND COD_PESSOA = '".$pertence_pessoa_antigo."'");
+  } else if ($_GET['update']=='demanda') {
+    $demanda_peca_antigo = $_POST['demanda-peca-antigo'];
+    $demanda_servico_antigo = $_POST['demanda-servico-antigo'];
+    $peca = $_POST['demanda-peca'];
+    $servico = $_POST['demanda-servico'];
+    mysqli_query($con, "UPDATE DEMANDA SET COD_ITEM_PECA = '".$peca."', COD_ITEM_SERVICO = '".$servico."' WHERE COD_ITEM_PECA = '".$demanda_peca_antigo."' AND COD_ITEM_SERVICO = '".$demanda_servico_antigo."'");
   }
 }
  ?>
