@@ -120,9 +120,9 @@ require_once 'conexao.php';
                   <label for="os-equipe">Equipe:</label>
                   <select class="form-control" name="os-equipe">
                     <?php
-                    $result = mysqli_query($con, "SELECT NOME FROM EQUIPE;");
+                    $result = mysqli_query($con, "SELECT ID_EQUIPE FROM EQUIPE;");
                     while($nome = mysqli_fetch_assoc($result)) { ?>
-                    <option><?php echo $nome['NOME']; ?></option>
+                    <option><?php echo $nome['ID_EQUIPE']; ?></option>
                   <?php } ?>
                   </select>
                 </div>
