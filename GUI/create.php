@@ -291,11 +291,6 @@ if (isset($_GET['add'])) {
     $chassi = $_POST['os-veiculo'];
     $equipe = $_POST['os-equipe'];
     $insere = "INSERT INTO ORDEM_SERVICO (NUMERO_OS, DATA_EMISSAO, DATA_CONCLUSAO, CHASSI, ID_EQUIPE) VALUES ('NULL', '".$data_emissao."', '".$data_conclusao."', '".$chassi."', '".$equipe."')";
-    echo ($insere);
-    echo gettype($data_emissao);
-    echo gettype($data_conclusao);
-    echo gettype($chassi);
-    echo gettype($equipe);
     mysqli_query($con, $insere);
   } else if ($_GET['add']=='pertence') {
     $equipe_nome = $_POST['pertence-equipe'];

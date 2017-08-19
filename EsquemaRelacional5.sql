@@ -1,9 +1,6 @@
 -- Script para criação do BD do Esquema Relacional 5
 -- Grupo: Filipe Carlos e Matheus Campos
 
--- se já existe um esquema empresa, delete
-DROP SCHEMA EMPRESA;
-
 -- criando esquema
 CREATE DATABASE EMPRESA;
 USE EMPRESA;
@@ -37,7 +34,7 @@ CREATE TABLE ORDEM_SERVICO (
 	DATA_CONCLUSAO VARCHAR(10),
 	CHASSI VARCHAR(17) NOT NULL,
 	ID_EQUIPE INTEGER,
-    
+
     PRIMARY KEY(NUMERO_OS,CHASSI),
     FOREIGN KEY (CHASSI) references VEICULO(CHASSI) on update no action on delete cascade
 );
