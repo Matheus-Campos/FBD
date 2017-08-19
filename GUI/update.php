@@ -30,14 +30,14 @@ require_once 'conexao.php';
                   <label for="pessoa-endereco">Endereço:</label>
                   <input type="text" class="form-control" name="pessoa-endereco" maxlength="255" placeholder="Ex: Rua Mamanguape, 69" required>
                 </div>
-                <div class="form-group">
+                <!--<div class="form-group">
                   <label for="pessoa-tipo">Tipo:</label>
                   <select class="form-control" name="pessoa-tipo" id="pessoa-tipo">
                     <option selected>--Nenhum--</option>
                     <option value="M">Mecânico</option>
                     <option value="C">Cliente</option>
                   </select>
-                </div>
+                </div>-->
                 <div class="form-group oculto" id="pessoa-telefone">
                   <label for="pessoa-telefone">Telefone:</label>
                   <input type="number" class="form-control" name="pessoa-telefone" placeholder="40028922">
@@ -122,14 +122,14 @@ require_once 'conexao.php';
                 </div>
                 <div class="form-group oculto">
                   <?php $item_id = $_GET['id'];
-                        $id_peca = mysqli_query($con, "SELECT COD_PECA FROM PECA WHERE COD_PESSOA = '".$item_id."'");
-                        if ($id_peca == FALSE) { ?>
+                        $id_peca = mysqli_query($con, "SELECT COD_PECA FROM PECA WHERE COD_PECA = '".$item_id."'");
+                        if ($id_peca->num_rows == 0) { ?>
                             <input type="text" name="item-tipo" value="S">
                         <?php } else { ?>
                             <input type="text" name="item-tipo" value="P">
                         <?php } ?>
                 </div>
-                <?php if ($id_peca != FALSE) { ?>
+                <?php if ($id_peca->num_rows != 0) { ?>
                 <div class="form-group" id="item-fornecedor">
                   <label for="item-fornecedor">Fornecedor:</label>
                   <input type="text" maxlength="20" name="item-fornecedor" placeholder="Ex: Michellin" class="form-control">
@@ -176,9 +176,9 @@ require_once 'conexao.php';
                   <label for="os-equipe">Equipe:</label>
                   <select class="form-control" name="os-equipe">
                     <?php
-                    $result = mysqli_query($con, "SELECT NOME FROM EQUIPE;");
+                    $result = mysqli_query($con, "SELECT ID_EQUIPE FROM EQUIPE;");
                     while($nome = mysqli_fetch_assoc($result)) { ?>
-                    <option><?php echo $nome['NOME']; ?></option>
+                    <option><?php echo $nome['ID_EQUIPE']; ?></option>
                   <?php } ?>
                   </select>
                 </div>
