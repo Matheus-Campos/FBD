@@ -30,17 +30,14 @@ require_once 'conexao.php';
                   <label for="pessoa-endereco">Endereço:</label>
                   <input type="text" class="form-control" name="pessoa-endereco" maxlength="255" placeholder="Ex: Rua Mamanguape, 69" required>
                 </div>
-                <?php $result = mysqli_query($con, "SELECT TIPO FROM PESSOA WHERE COD_PESSOA = '".$_GET['id']."'");
-
-                 ?>
-                <!--<div class="form-group">
+                <div class="form-group">
                   <label for="pessoa-tipo">Tipo:</label>
                   <select class="form-control" name="pessoa-tipo" id="pessoa-tipo">
                     <option selected>--Nenhum--</option>
                     <option value="M">Mecânico</option>
                     <option value="C">Cliente</option>
                   </select>
-                </div>-->
+                </div>
                 <div class="form-group oculto" id="pessoa-telefone">
                   <label for="pessoa-telefone">Telefone:</label>
                   <input type="number" class="form-control" name="pessoa-telefone" placeholder="40028922">
