@@ -12,4 +12,4 @@ Repositório do Projeto de Banco de Dados de Matheus Campos da Silva e Filipe Ca
     2. Clique em “SQL” ao lado de “Base de Dados” no menu superior
     3. Copie todo o conteúdo do arquivo EsquemaRelacional5.sql e cole na área de query do phpmyadmin
     4. Em seguida, clique em executar no canto inferior direito
-5. Pronto. Agora é só acessar localhost/FDB/GUI no seu navegador para ter acesso a interface gráfica do programa
+5. Pronto. Agora é só acessar localhost/FBD/GUI no seu navegador para ter acesso a interface gráfica do programa
